@@ -2,7 +2,9 @@ package br.com.estudos.blogapi.model.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,7 +54,13 @@ public class Post implements Serializable {
 
 	private LocalDate atualizadoEm;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "post", orphanRemoval = true)
+	private List<Comentario> comentarios;
+	
+	@OneToMany(mappedBy = "post", orphanRemoval = true)
+	private List<Curtida> curtidas;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "id_usuario", nullable = false)
 	private Usuario usuario;
 

@@ -53,10 +53,16 @@ public class Usuario implements Serializable {
 	private LocalDate atualizadoEm;
 
 	@JoinColumn(name = "id_redes_sociais")
-	@OneToOne
+	@OneToOne(orphanRemoval = true)
 	private RedesSociais redesSociais;
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "usuario", orphanRemoval = true)
 	private List<Post> posts;
+
+	@OneToMany(mappedBy = "segue", cascade = CascadeType.ALL)
+	private List<Seguidor> seguidores;
+
+	@OneToMany(mappedBy = "seguido", cascade = CascadeType.ALL)
+	private List<Seguidor> seguindo;
 
 }

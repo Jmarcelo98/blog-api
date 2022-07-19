@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,12 +26,12 @@ public class Seguidor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@OneToOne
-	@JoinColumn(name = "id_usuario_segue", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "id_usuario_segue")
 	private Usuario segue;
 
-	@OneToOne
-	@JoinColumn(name = "id_usuario_seguido", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "id_usuario_seguido")
 	private Usuario seguido;
 
 }
