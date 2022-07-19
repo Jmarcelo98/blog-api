@@ -13,4 +13,8 @@ public interface SeguidorRepository extends JpaRepository<Seguidor, Integer> {
 
 	List<Seguidor> findAllBySeguido(Usuario usuario);
 
+	Integer countBySegue(Usuario usuario);
+
+	Integer countBySeguido(Usuario usuario);
+
 }

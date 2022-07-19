@@ -1,6 +1,7 @@
 package br.com.estudos.blogapi.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,11 @@ public class SeguidorController {
 	@GetMapping(value = "/todos-seguidos")
 	public ResponseEntity<List<Seguidor>> buscarSeguidos(Integer id) {
 		return ResponseEntity.ok(seguidorService.buscarSeguindo(id));
+	}
+
+	@GetMapping(value = "/quantidade-seguidor")
+	public ResponseEntity<Map<String, Integer>> buscarQuantidadeSeguidor(Integer id) {
+		return ResponseEntity.ok(seguidorService.buscarQuantidadeSeguidor(id));
 	}
 
 }

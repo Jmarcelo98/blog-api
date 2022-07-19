@@ -1,6 +1,8 @@
 package br.com.estudos.blogapi.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,19 @@ public class SeguidorService {
 	public List<Seguidor> buscarSeguindo(Integer id) {
 		var usuario = buscarUsuarioPorId(id);
 		return seguidorRepository.findAllBySegue(usuario);
+	}
+
+	public Map<String, Integer> buscarQuantidadeSeguidor(Integer id) {
+		var usuario = buscarUsuarioPorId(id);
+		
+		var seguindo = seguidorRepository.countBySegue(usuario);
+		var seguidores = seguidorRepository.countBySeguido(usuario);
+
+		Map<String, Integer> quantidadeSeguidor = new HashMap<>();
+
+		quantidadeSeguidor.put("seguindo", seguindo);
+		quantidadeSeguidor.put("seguidores", seguidores);
+		return quantidadeSeguidor;
 	}
 
 	public Usuario buscarUsuarioPorId(Integer id) {
