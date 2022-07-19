@@ -47,7 +47,7 @@ public class DBService {
 		LocalDate dateFevereiro = LocalDate.of(2021, Month.FEBRUARY, 16);
 		LocalDate dateMarco = LocalDate.of(2021, Month.MARCH, 16);
 
-		var usuario = Usuario.builder().id(null).apelido("jmarcelo98").nome("João Marcelo").criadoEm(dateMarco2021)
+		var usuario = Usuario.builder().id(null).apelido("joao").nome("João Marcelo").criadoEm(dateMarco2021)
 				.atualizadoEm(null).biografia("Dev Full Stack Java").foto(null).isPremium(false).posts(null)
 				.senha("123").urlInstagram("https://www.instagram.com/jmarcelo098/")
 				.urlLinkedin("www.linkedin.com/in/jmarcelo98/").urlWebSite("https://jmarcelo98.github.io/portfolio/")
@@ -84,7 +84,21 @@ public class DBService {
 						+ "#ObrigadoRonaldo")
 				.build();
 
-		postRepository.saveAll(Arrays.asList(post));
+		var post2 = Post.builder().id(null).criadoEm(dateJaneiro).atualizadoEm(null).miniatura(null)
+				.descricao("A Imperial é isso tudo mesmo?").categoria(categoria2).titulo("IMPERIAL").isPublicado(true)
+				.publicadoEm(dateFevereiro).usuario(usuario)
+				.conteudo(
+						"A Imperial fez um Major incrivel, mas cai de produção, será que acabou a Imperial? Chegamos no momentos "
+								+ "em que acontecerá trocas de bonecos?")
+				.build();
+
+		var post3 = Post.builder().id(null).criadoEm(dateJaneiro).atualizadoEm(null).miniatura(null)
+				.descricao("A FURIA VAI GANHAR O MAJOR").categoria(categoria2).titulo("MAJOR RIO 2022")
+				.isPublicado(false).publicadoEm(null).usuario(usuario)
+				.conteudo("A Furia finalmente saiu do TOP 8 das competições para se sagrar CAMPEÃ MUNDIAL DE CSGOS")
+				.build();
+
+		postRepository.saveAll(Arrays.asList(post, post2, post3));
 
 		var comentario = Comentario.builder().id(null).criadoEm(dateFevereiro).post(post).usuario(usuario1)
 				.comentario("Muito bom o POST! A SAF é muito importante para o clubes brasileiros").build();
