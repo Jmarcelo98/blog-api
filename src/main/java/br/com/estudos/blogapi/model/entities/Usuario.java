@@ -10,10 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,7 +34,7 @@ public class Usuario implements Serializable {
 
 	private String nome;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String apelido;
 
 	@Column(nullable = false)
@@ -49,17 +47,19 @@ public class Usuario implements Serializable {
 
 	private String biografia;
 
+	private String urlLinkedin;
+
+	private String urlInstagram;
+
+	private String urlWebSite;
+
 	@Column(nullable = false)
 	private LocalDate criadoEm;
 
 	private LocalDate atualizadoEm;
 
-	@JoinColumn(name = "id_redes_sociais")
-	@OneToOne(orphanRemoval = true)
-	private RedesSociais redesSociais;
-
 	@OneToMany(mappedBy = "usuario", orphanRemoval = true)
-	@JsonIgnore	
+	@JsonIgnore
 	private List<Post> posts;
 
 	@OneToMany(mappedBy = "segue", cascade = CascadeType.ALL)
