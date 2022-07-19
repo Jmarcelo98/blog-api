@@ -29,7 +29,7 @@ public class Comentario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	private LocalDate criadoEm;
 
 	@Column(nullable = false)

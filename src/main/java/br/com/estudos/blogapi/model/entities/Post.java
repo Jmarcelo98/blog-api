@@ -49,14 +49,14 @@ public class Post implements Serializable {
 
 	private LocalDate publicadoEm;
 
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	private LocalDate criadoEm;
 
 	private LocalDate atualizadoEm;
 
 	@OneToMany(mappedBy = "post", orphanRemoval = true)
 	private List<Comentario> comentarios;
-	
+
 	@OneToMany(mappedBy = "post", orphanRemoval = true)
 	private List<Curtida> curtidas;
 
@@ -65,7 +65,7 @@ public class Post implements Serializable {
 	private Usuario usuario;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_categoria", nullable = false)
+	@JoinColumn(name = "id_categoria", nullable = false, updatable = false)
 	private Categoria categoria;
 
 }

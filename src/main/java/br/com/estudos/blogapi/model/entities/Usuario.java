@@ -53,7 +53,7 @@ public class Usuario implements Serializable {
 
 	private String urlWebSite;
 
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	private LocalDate criadoEm;
 
 	private LocalDate atualizadoEm;
