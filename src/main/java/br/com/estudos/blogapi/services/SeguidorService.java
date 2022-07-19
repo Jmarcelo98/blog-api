@@ -6,7 +6,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import br.com.estudos.blogapi.model.entities.Seguidor;
+import br.com.estudos.blogapi.mappers.output.SeguidoresOutputMapper;
+import br.com.estudos.blogapi.mappers.output.SeguindoOutputMapper;
+import br.com.estudos.blogapi.model.dtos.output.SeguidoresOutputDTO;
+import br.com.estudos.blogapi.model.dtos.output.SeguindoOutputDTO;
 import br.com.estudos.blogapi.model.entities.Usuario;
 import br.com.estudos.blogapi.repositories.SeguidorRepository;
 import lombok.AllArgsConstructor;
@@ -19,19 +22,24 @@ public class SeguidorService {
 
 	private final UsuarioService usuarioService;
 
-	public List<Seguidor> buscarSeguidores(Integer id) {
+	public List<SeguidoresOutputDTO> buscarSeguidores(Integer id) {
+
 		var usuario = buscarUsuarioPorId(id);
-		return seguidorRepository.findAllBySeguido(usuario);
+		var seguidores = seguidorRepository.findAllBySeguido(usuario);
+
+		return SeguidoresOutputMapper.INSTANCE.listaEntityToListaDTO(seguidores);
+
 	}
 
-	public List<Seguidor> buscarSeguindo(Integer id) {
+	public List<SeguindoOutputDTO> buscarSeguindo(Integer id) {
 		var usuario = buscarUsuarioPorId(id);
-		return seguidorRepository.findAllBySegue(usuario);
+		var seguindo = seguidorRepository.findAllBySegue(usuario);
+		return SeguindoOutputMapper.INSTANCE.listaEntityToListaDTO(seguindo);
 	}
 
 	public Map<String, Integer> buscarQuantidadeSeguidor(Integer id) {
 		var usuario = buscarUsuarioPorId(id);
-		
+
 		var seguindo = seguidorRepository.countBySegue(usuario);
 		var seguidores = seguidorRepository.countBySeguido(usuario);
 
