@@ -1,11 +1,16 @@
 package br.com.estudos.blogapi.controllers;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.estudos.blogapi.model.dtos.PostDTO;
@@ -35,6 +40,13 @@ public class PostController {
 	public ResponseEntity<Void> deletar(Integer idPost) {
 		postService.deletar(idPost);
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping(path = "/{apelido}")
+	public ResponseEntity<List<PostDTO>> buscarPostsDoUsuario(@PathVariable("apelido") String apelido,
+			@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
+			@RequestParam(value = "itensPorPagina", defaultValue = "10") Integer itensPorPagina) {
+		return ResponseEntity.ok(postService.buscarPostsDoUsuario(apelido, pagina, itensPorPagina));
 	}
 
 }

@@ -1,8 +1,11 @@
 package br.com.estudos.blogapi.services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.com.estudos.blogapi.handlers.RecursoNaoEncontradoException;
@@ -47,6 +50,18 @@ public class PostService {
 	@Transactional
 	public void deletar(Integer idPost) {
 		postRepository.deleteById(idPost);
+	}
+
+	public List<PostDTO> buscarPostsDoUsuario(String apelido, Integer pagina, Integer itensPorPagina) {
+
+		var usuario = usuarioService.buscarPorApelido(apelido);
+
+		PageRequest pageRequest = PageRequest.of(pagina, itensPorPagina);
+
+		var listaPost = postRepository.findAllByUsuarioAndIsPublicadoTrueOrderByCriadoEm(usuario, pageRequest);
+
+		return PostMapper.INSTANCE.listaEntityToListaDTO(listaPost);
+
 	}
 
 }
