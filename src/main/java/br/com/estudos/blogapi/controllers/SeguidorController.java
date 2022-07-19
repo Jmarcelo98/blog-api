@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,15 +23,15 @@ public class SeguidorController {
 
 	private final SeguidorService seguidorService;
 
-	@PostMapping
-	public ResponseEntity<Void> inserir(Integer idLogado, Integer idASeguir) {
-		seguidorService.inserir(idLogado, idASeguir);
+	@PostMapping(path = "/{apelido}")
+	public ResponseEntity<Void> inserir(@PathVariable("apelido") String apelido, Integer idLogado) {
+		seguidorService.inserir(idLogado, apelido);
 		return ResponseEntity.ok().build();
 	}
 
-	@DeleteMapping
-	public ResponseEntity<Void> deletar(Integer idLogado, Integer idASeguir) {
-		seguidorService.deletar(idLogado, idASeguir);
+	@DeleteMapping(path = "/{apelido}")
+	public ResponseEntity<Void> deletar(@PathVariable("apelido") String apelido, Integer idLogado) {
+		seguidorService.deletar(idLogado, apelido);
 		return ResponseEntity.ok().build();
 	}
 

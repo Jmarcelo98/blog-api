@@ -17,8 +17,10 @@ import br.com.estudos.blogapi.model.entities.Seguidor;
 import br.com.estudos.blogapi.model.entities.Usuario;
 import br.com.estudos.blogapi.repositories.SeguidorRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class SeguidorService {
 
@@ -27,37 +29,42 @@ public class SeguidorService {
 	private final UsuarioService usuarioService;
 
 	@Transactional
-	public void deletar(Integer idLogado, Integer idASeguir) {
+	public void deletar(Integer idLogado, String apelido) {
 
 		var usuarioLogado = buscarUsuarioPorId(idLogado);
-		var usuarioASerSeguido = buscarUsuarioPorId(idASeguir);
+		
+		var usuarioASerSeguido = buscarUsuarioPeloApelido(apelido);
 
-		if (!podeSeguir(usuarioLogado, usuarioASerSeguido)) {
+		if (!isMesmoUsuario(usuarioLogado, usuarioASerSeguido)) {
+			log.error("Você não pode deixar de seguir a você mesmo");
 			throw new NegocioException("Você não pode deixar de seguir a você mesmo");
 		}
 
 		var seguidor = seguidorRepository.findBySegueAndSeguido(usuarioLogado, usuarioASerSeguido);
-		
+
 		if (seguidor == null) {
-			throw new NegocioException("Você não ainda não segue esse usuário");
+			log.error("Você não pode parar de seguir um usuário que ainda não segue");
+			throw new NegocioException("Você não pode parar de seguir um usuário que ainda não segue");
 		}
-		
+
 		seguidorRepository.deleteById(seguidor.getId());
 
 	}
 
 	@Transactional
-	public void inserir(Integer idLogado, Integer idASeguir) {
+	public void inserir(Integer idLogado, String apelido) {
 
 		var usuarioLogado = buscarUsuarioPorId(idLogado);
-		var usuarioASerSeguido = buscarUsuarioPorId(idASeguir);
 
-		if (!podeSeguir(usuarioLogado, usuarioASerSeguido)) {
+		var usuarioASerSeguido = buscarUsuarioPeloApelido(apelido);
+
+		if (!isMesmoUsuario(usuarioLogado, usuarioASerSeguido)) {
 			throw new NegocioException("Você não pode seguir a você mesmo");
 		}
 
 		if (jaSegue(usuarioLogado, usuarioASerSeguido)) {
-			throw new NegocioException("O " + usuarioLogado.getNome() + " já segue o " + usuarioASerSeguido.getNome());
+			log.error("O " + usuarioLogado.getNome() + " já segue o " + usuarioASerSeguido.getNome());
+			throw new NegocioException("Você já segue este usuário");
 		}
 
 		var seguidor = Seguidor.builder().id(null).segue(usuarioLogado).seguido(usuarioASerSeguido).build();
@@ -94,15 +101,19 @@ public class SeguidorService {
 		return quantidadeSeguidor;
 	}
 
-	public Usuario buscarUsuarioPorId(Integer id) {
+	private Usuario buscarUsuarioPorId(Integer id) {
 		return usuarioService.buscarPorId(id);
+	}
+
+	private Usuario buscarUsuarioPeloApelido(String apelido) {
+		return usuarioService.buscarPorApelido(apelido);
 	}
 
 	private boolean jaSegue(Usuario usuarioLogado, Usuario aSeguir) {
 		return seguidorRepository.existsBySegueAndSeguido(usuarioLogado, aSeguir);
 	}
 
-	private boolean podeSeguir(Usuario usuarioLogado, Usuario aSeguir) {
+	private boolean isMesmoUsuario(Usuario usuarioLogado, Usuario aSeguir) {
 
 		if (usuarioLogado == aSeguir) {
 			return false;
