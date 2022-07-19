@@ -114,7 +114,7 @@ public class DBService {
 
 		var seguidor = Seguidor.builder().id(null).segue(usuario).seguido(usuario1).build();
 		var seguidor1 = Seguidor.builder().id(null).segue(usuario1).seguido(usuario).build();
-		var seguidor2 = Seguidor.builder().id(null).segue(usuario2).seguido(usuario).build();
+		var seguidor2 = Seguidor.builder().id(null).segue(usuario2).seguido(usuario1).build();
 		var seguidor3 = Seguidor.builder().id(null).segue(usuario2).seguido(usuario).build();
 
 		seguidorRepository.saveAll(Arrays.asList(seguidor, seguidor1, seguidor2, seguidor3));
