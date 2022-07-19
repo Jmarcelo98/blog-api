@@ -27,6 +27,26 @@ public class SeguidorService {
 	private final UsuarioService usuarioService;
 
 	@Transactional
+	public void deletar(Integer idLogado, Integer idASeguir) {
+
+		var usuarioLogado = buscarUsuarioPorId(idLogado);
+		var usuarioASerSeguido = buscarUsuarioPorId(idASeguir);
+
+		if (!podeSeguir(usuarioLogado, usuarioASerSeguido)) {
+			throw new NegocioException("Você não pode deixar de seguir a você mesmo");
+		}
+
+		var seguidor = seguidorRepository.findBySegueAndSeguido(usuarioLogado, usuarioASerSeguido);
+		
+		if (seguidor == null) {
+			throw new NegocioException("Você não ainda não segue esse usuário");
+		}
+		
+		seguidorRepository.deleteById(seguidor.getId());
+
+	}
+
+	@Transactional
 	public void inserir(Integer idLogado, Integer idASeguir) {
 
 		var usuarioLogado = buscarUsuarioPorId(idLogado);
