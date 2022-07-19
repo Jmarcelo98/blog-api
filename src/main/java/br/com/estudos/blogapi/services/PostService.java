@@ -10,10 +10,8 @@ import br.com.estudos.blogapi.mappers.PostMapper;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
 import br.com.estudos.blogapi.repositories.PostRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 @AllArgsConstructor
 public class PostService {
 
@@ -44,6 +42,11 @@ public class PostService {
 
 		postRepository.save(post);
 
+	}
+
+	@Transactional
+	public void deletar(Integer idPost) {
+		postRepository.deleteById(idPost);
 	}
 
 }
