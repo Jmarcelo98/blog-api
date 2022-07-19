@@ -86,7 +86,7 @@ public class DBService {
 
 		var post = Post.builder().id(null).criadoEm(dateJaneiro).atualizadoEm(null).miniatura(null)
 				.descricao("O PODER DA GESTÃO NO FUTEBOL").categoria(categoria).titulo("SAF FUTEBOL").isPublicado(true)
-				.publicadoEm(dateJaneiro)
+				.publicadoEm(dateJaneiro).usuario(usuario)
 				.conteudo("É de conhecimento de todos, o grande roubo que aconteceu no "
 						+ "Cruzeiro em 2019 pelos seus gestores! Após anos turbulentos e fracassados da equipe mineira, em dezembro de 2021,"
 						+ " o clube mineiro por meio de votação do seus conselheiros, conseguiu alterar o estatuto do clube, permitindo a "
