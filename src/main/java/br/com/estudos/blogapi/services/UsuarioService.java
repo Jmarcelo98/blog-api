@@ -15,14 +15,19 @@ public class UsuarioService {
 
 	private final UsuarioRepository usuarioRepository;
 
+	@Transactional
+	public void deletar(Integer id) {
+		usuarioRepository.deleteById(id);
+	}
+
 	public Usuario buscarPorId(Integer id) {
 		return usuarioRepository.findById(id)
 				.orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado através do ID"));
 	}
 
-	@Transactional
-	public void deletar(Integer id) {
-		usuarioRepository.deleteById(id);
+	public Usuario buscarPorApelido(String apelido) {
+		return usuarioRepository.findByApelido(apelido)
+				.orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado através do apelido"));
 	}
 
 }
