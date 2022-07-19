@@ -1,7 +1,9 @@
 package br.com.estudos.blogapi.model.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,14 +25,15 @@ public class Curtida implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private Boolean criadoEm;
+	@Column(nullable = false)
+	private LocalDate criadoEm;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_post")
+	@JoinColumn(name = "id_post", nullable = false)
 	private Post post;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario")
+	@JoinColumn(name = "id_usuario", nullable = false)
 	private Usuario usuario;
 
 }

@@ -28,8 +28,12 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	private String nome;
+
+	@Column(nullable = false)
 	private String apelido;
 
+	@Column(nullable = false)
 	private String senha;
 
 	private Boolean isPremium;
@@ -37,20 +41,18 @@ public class Usuario implements Serializable {
 	@Lob
 	private byte[] foto;
 
-	@Column(nullable = true)
 	private String biografia;
 
+	@Column(nullable = false)
 	private LocalDate criadoEm;
 
-	@Column(nullable = true)
 	private LocalDate atualizadoEm;
 
-	@JoinColumn(name = "id_redes_sociais", nullable = true)
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "id_redes_sociais")
+	@OneToOne
 	private RedesSociais redesSociais;
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Column(nullable = true)
 	private List<Post> posts;
 
 }

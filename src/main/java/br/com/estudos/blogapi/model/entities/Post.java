@@ -29,29 +29,30 @@ public class Post implements Serializable {
 	@Lob
 	private byte[] miniatura;
 
+	@Column(nullable = false)
 	private String descricao;
 
+	@Column(nullable = false)
 	private String titulo;
 
-	@Column(columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT", nullable = false)
 	private String conteudo;
 
 	private Boolean isPublicado;
 
-	@Column(nullable = true)
 	private LocalDate publicadoEm;
 
+	@Column(nullable = false)
 	private LocalDate criadoEm;
 
-	@Column(nullable = true)
 	private LocalDate atualizadoEm;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario")
+	@JoinColumn(name = "id_usuario", nullable = false)
 	private Usuario usuario;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_categoria")
+	@JoinColumn(name = "id_categoria", nullable = false)
 	private Categoria categoria;
 
 }

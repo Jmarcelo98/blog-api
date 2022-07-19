@@ -23,11 +23,11 @@ public class Seguidor implements Serializable {
 	private Integer id;
 
 	@OneToOne
-	@JoinColumn(name = "id_usuario_segue")
+	@JoinColumn(name = "id_usuario_segue", nullable = false)
 	private Usuario segue;
 
 	@OneToOne
-	@JoinColumn(name = "id_usuario_seguido")
+	@JoinColumn(name = "id_usuario_seguido", nullable = false)
 	private Usuario seguido;
 
 }
