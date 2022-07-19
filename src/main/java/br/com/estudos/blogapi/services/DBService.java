@@ -10,14 +10,12 @@ import br.com.estudos.blogapi.model.entities.Categoria;
 import br.com.estudos.blogapi.model.entities.Comentario;
 import br.com.estudos.blogapi.model.entities.Curtida;
 import br.com.estudos.blogapi.model.entities.Post;
-import br.com.estudos.blogapi.model.entities.RedesSociais;
 import br.com.estudos.blogapi.model.entities.Seguidor;
 import br.com.estudos.blogapi.model.entities.Usuario;
 import br.com.estudos.blogapi.repositories.CategoriaRepository;
 import br.com.estudos.blogapi.repositories.ComentarioRepository;
 import br.com.estudos.blogapi.repositories.CurtidaRepository;
 import br.com.estudos.blogapi.repositories.PostRepository;
-import br.com.estudos.blogapi.repositories.RedesSociaisRepository;
 import br.com.estudos.blogapi.repositories.SeguidorRepository;
 import br.com.estudos.blogapi.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +34,6 @@ public class DBService {
 
 	private final ComentarioRepository comentarioRepository;
 
-	private final RedesSociaisRepository redesSociaisRepository;
-
 	private final SeguidorRepository seguidorRepository;
 
 	public void instanciarBandoDeDados() {
@@ -51,29 +47,21 @@ public class DBService {
 		LocalDate dateFevereiro = LocalDate.of(2021, Month.FEBRUARY, 16);
 		LocalDate dateMarco = LocalDate.of(2021, Month.MARCH, 16);
 
-		var redesSociais1 = RedesSociais.builder().id(null).urlInstagram("https://www.instagram.com/jmarcelo098/")
-				.urlLinkedin("www.linkedin.com/in/jmarcelo98/").urlSite("https://jmarcelo98.github.io/portfolio/")
-				.build();
-
-		var redesSociais2 = RedesSociais.builder().id(null).urlInstagram("https://www.instagram.com/senavs/")
-				.urlLinkedin("www.linkedin.com/in/senavs/").urlSite("senavs.com").build();
-
-		var redesSociais3 = RedesSociais.builder().id(null).urlInstagram("https://www.instagram.com/marcosgiovanny/")
-				.urlLinkedin("www.linkedin.com/in/marcos-giovanny/").urlSite(null).build();
-
-		redesSociaisRepository.saveAll(Arrays.asList(redesSociais1, redesSociais2, redesSociais3));
-
 		var usuario = Usuario.builder().id(null).apelido("jmarcelo98").nome("João Marcelo").criadoEm(dateMarco2021)
 				.atualizadoEm(null).biografia("Dev Full Stack Java").foto(null).isPremium(false).posts(null)
-				.senha("123").redesSociais(null).redesSociais(null).redesSociais(redesSociais1).build();
+				.senha("123").urlInstagram("https://www.instagram.com/jmarcelo098/")
+				.urlLinkedin("www.linkedin.com/in/jmarcelo98/").urlWebSite("https://jmarcelo98.github.io/portfolio/")
+				.build();
 
 		var usuario1 = Usuario.builder().id(null).apelido("senavs").nome("Matheus Sena").criadoEm(dateMaio2021)
 				.atualizadoEm(null).biografia("Engenheiro de Software").foto(null).isPremium(false).posts(null)
-				.senha("123").redesSociais(null).redesSociais(null).redesSociais(redesSociais2).build();
+				.senha("123").urlInstagram("https://www.instagram.com/senavs/")
+				.urlLinkedin("www.linkedin.com/in/senavs/").urlWebSite("senavs.com").build();
 
 		var usuario2 = Usuario.builder().id(null).apelido(".Marcos").nome("Marcos Giovanny").criadoEm(agora)
 				.atualizadoEm(null).biografia("Estagiário Dev").foto(null).isPremium(false).posts(null).senha("123")
-				.redesSociais(null).redesSociais(null).redesSociais(redesSociais3).build();
+				.urlInstagram("https://www.instagram.com/marcosgiovanny/")
+				.urlLinkedin("www.linkedin.com/in/marcos-giovanny/").urlWebSite(null).build();
 
 		usuarioRepository.saveAll(Arrays.asList(usuario, usuario1, usuario2));
 
