@@ -15,6 +15,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -57,12 +59,15 @@ public class Usuario implements Serializable {
 	private RedesSociais redesSociais;
 
 	@OneToMany(mappedBy = "usuario", orphanRemoval = true)
+	@JsonIgnore	
 	private List<Post> posts;
 
 	@OneToMany(mappedBy = "segue", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Seguidor> seguidores;
 
 	@OneToMany(mappedBy = "seguido", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Seguidor> seguindo;
 
 }
