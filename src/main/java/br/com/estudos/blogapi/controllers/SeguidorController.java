@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,12 @@ import lombok.AllArgsConstructor;
 public class SeguidorController {
 
 	private final SeguidorService seguidorService;
+
+	@PostMapping
+	public ResponseEntity<Void> inserir(Integer idLogado, Integer idASeguir) {
+		seguidorService.inserir(idLogado, idASeguir);
+		return ResponseEntity.ok().build();
+	}
 
 	@GetMapping(value = "/todos-seguidores")
 	public ResponseEntity<List<SeguidoresOutputDTO>> buscarSeguidores(Integer id) {

@@ -17,4 +17,6 @@ public interface SeguidorRepository extends JpaRepository<Seguidor, Integer> {
 
 	Integer countBySeguido(Usuario usuario);
 
+	Boolean existsBySegueAndSeguido(Usuario segue, Usuario seguido);
+
 }
