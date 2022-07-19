@@ -15,12 +15,16 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
 @Data
+@Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
