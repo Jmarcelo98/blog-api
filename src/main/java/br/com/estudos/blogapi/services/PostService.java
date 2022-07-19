@@ -13,8 +13,10 @@ import br.com.estudos.blogapi.mappers.PostMapper;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
 import br.com.estudos.blogapi.repositories.PostRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class PostService {
 
@@ -26,12 +28,11 @@ public class PostService {
 	public void inserir(PostDTO postDTO, Integer idLogado) {
 
 		var usuario = usuarioService.buscarPorId(idLogado);
-
 		var post = PostMapper.INSTANCE.DTOToEntity(postDTO);
-
 		post.setUsuario(usuario);
-
 		postRepository.save(post);
+
+		log.info("Post cadastrado com sucesso");
 
 	}
 
@@ -44,12 +45,15 @@ public class PostService {
 		BeanUtils.copyProperties(postDTO, post);
 
 		postRepository.save(post);
+		
+		log.info("Post atualizado com sucesso");
 
 	}
 
 	@Transactional
 	public void deletar(Integer idPost) {
 		postRepository.deleteById(idPost);
+		log.info("Post deletado com sucesso");
 	}
 
 	public List<PostDTO> buscarPostsDoUsuario(String apelido, Integer pagina, Integer itensPorPagina) {

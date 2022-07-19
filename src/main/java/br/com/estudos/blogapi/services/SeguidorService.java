@@ -32,7 +32,7 @@ public class SeguidorService {
 	public void deletar(Integer idLogado, String apelido) {
 
 		var usuarioLogado = buscarUsuarioPorId(idLogado);
-		
+
 		var usuarioASerSeguido = buscarUsuarioPeloApelido(apelido);
 
 		if (!isMesmoUsuario(usuarioLogado, usuarioASerSeguido)) {
@@ -48,6 +48,8 @@ public class SeguidorService {
 		}
 
 		seguidorRepository.deleteById(seguidor.getId());
+
+		log.info("Usuário descontinuo com sucesso");
 
 	}
 
@@ -70,6 +72,8 @@ public class SeguidorService {
 		var seguidor = Seguidor.builder().id(null).segue(usuarioLogado).seguido(usuarioASerSeguido).build();
 
 		seguidorRepository.save(seguidor);
+
+		log.info("Usuário seguido com sucesso");
 
 	}
 

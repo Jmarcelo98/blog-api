@@ -35,6 +35,8 @@ public class UsuarioService {
 
 		usuarioRepository.save(usuario);
 
+		log.info("Usuário cadastrado com sucesso");
+
 	}
 
 	@Transactional
@@ -45,11 +47,14 @@ public class UsuarioService {
 
 		usuarioRepository.save(usuario);
 
+		log.info("Usuário atualizado com sucesso");
+
 	}
 
 	@Transactional
 	public void deletar(Integer id) {
 		usuarioRepository.deleteById(id);
+		log.info("Usuário deletado com sucesso");
 	}
 
 	public Usuario buscarPorId(Integer id) {
