@@ -13,8 +13,10 @@ import br.com.estudos.blogapi.model.dtos.UsuarioDTO;
 import br.com.estudos.blogapi.model.entities.Usuario;
 import br.com.estudos.blogapi.repositories.UsuarioRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class UsuarioService {
 
@@ -24,6 +26,7 @@ public class UsuarioService {
 	public void inserir(String apelido, String senha) {
 
 		if (existePeloApelido(apelido)) {
+			log.error("Apelido: " + apelido + " já existe");
 			throw new NegocioException("Apelido já existe");
 		}
 
@@ -35,11 +38,11 @@ public class UsuarioService {
 	}
 
 	@Transactional
-	public void editar(UsuarioDTO usuarioDTO, Integer idLogado) {
+	public void atualizar(UsuarioDTO usuarioDTO, Integer idLogado) {
 		var usuario = buscarPorId(idLogado);
 
 		BeanUtils.copyProperties(usuarioDTO, usuario);
-		
+
 		usuarioRepository.save(usuario);
 
 	}

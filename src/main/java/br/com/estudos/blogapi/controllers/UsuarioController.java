@@ -32,8 +32,8 @@ public class UsuarioController {
 	}
 
 	@PatchMapping
-	public ResponseEntity<Void> editar(@RequestBody UsuarioDTO usuarioDTO, Integer idLogado) {
-		usuarioService.editar(usuarioDTO, idLogado);
+	public ResponseEntity<Void> atualizar(@RequestBody UsuarioDTO usuarioDTO, Integer idLogado) {
+		usuarioService.atualizar(usuarioDTO, idLogado);
 		return ResponseEntity.ok().build();
 	}
 
