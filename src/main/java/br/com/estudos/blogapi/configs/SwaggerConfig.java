@@ -1,4 +1,4 @@
-package br.com.estudos.blogapi.config;
+package br.com.estudos.blogapi.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

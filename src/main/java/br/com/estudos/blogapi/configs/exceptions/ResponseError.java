@@ -1,4 +1,4 @@
-package br.com.estudos.blogapi.config.exceptions;
+package br.com.estudos.blogapi.configs.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
