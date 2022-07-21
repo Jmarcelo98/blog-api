@@ -13,10 +13,12 @@
 	<artifactId>blog-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>blog-api</name>
+
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -51,6 +53,22 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
+		<!-- SECURITY -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.19.2</version>
+		</dependency>
+
+		<!-- FIM SECURITY -->
+
 
 		<!-- MAP STRUCT -->
 		<dependency>
@@ -92,7 +110,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version><!--$NO-MVN-MAN-VER$-->
+				<version>3.8.1</version><!--$NO-MVN-MAN-VER$ -->
 				<configuration>
 					<source>11</source> <!-- depending on your project -->
 					<target>11</target> <!-- depending on your project -->
