@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.estudos.blogapi.model.entities.Categoria;
@@ -46,20 +47,22 @@ public class DBService {
 		LocalDate dateJaneiro = LocalDate.of(2022, Month.JANUARY, 16);
 		LocalDate dateFevereiro = LocalDate.of(2021, Month.FEBRUARY, 16);
 		LocalDate dateMarco = LocalDate.of(2021, Month.MARCH, 16);
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		var usuario = Usuario.builder().id(null).apelido("joao").nome("João Marcelo").criadoEm(dateMarco2021)
 				.atualizadoEm(null).biografia("Dev Full Stack Java").foto(null).isPremium(false).posts(null)
-				.senha("123").urlInstagram("https://www.instagram.com/jmarcelo098/")
+				.senha(encoder.encode("123")).urlInstagram("https://www.instagram.com/jmarcelo098/")
 				.urlLinkedin("www.linkedin.com/in/jmarcelo98/").urlWebSite("https://jmarcelo98.github.io/portfolio/")
 				.build();
 
 		var usuario1 = Usuario.builder().id(null).apelido("senavs").nome("Matheus Sena").criadoEm(dateMaio2021)
 				.atualizadoEm(null).biografia("Engenheiro de Software").foto(null).isPremium(false).posts(null)
-				.senha("123").urlInstagram("https://www.instagram.com/senavs/")
+				.senha(encoder.encode("123")).urlInstagram("https://www.instagram.com/senavs/")
 				.urlLinkedin("www.linkedin.com/in/senavs/").urlWebSite("senavs.com").build();
 
 		var usuario2 = Usuario.builder().id(null).apelido(".Marcos").nome("Marcos Giovanny").criadoEm(agora)
-				.atualizadoEm(null).biografia("Estagiário Dev").foto(null).isPremium(false).posts(null).senha("123")
+				.atualizadoEm(null).biografia("Estagiário Dev").foto(null).isPremium(false).posts(null).senha(encoder.encode("123"))
 				.urlInstagram("https://www.instagram.com/marcosgiovanny/")
 				.urlLinkedin("www.linkedin.com/in/marcos-giovanny/").urlWebSite(null).build();
 
