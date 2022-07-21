@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.estudos.blogapi.configs.security.JWTUtils;
 import br.com.estudos.blogapi.model.dtos.output.SeguidoresOutputDTO;
 import br.com.estudos.blogapi.model.dtos.output.SeguindoOutputDTO;
 import br.com.estudos.blogapi.services.SeguidorService;
@@ -22,6 +23,8 @@ import lombok.AllArgsConstructor;
 public class SeguidorController {
 
 	private final SeguidorService seguidorService;
+	
+	private final JWTUtils jwtUtils;
 
 	@PostMapping(path = "/{apelido}")
 	public ResponseEntity<Void> inserir(@PathVariable("apelido") String apelido, Integer idLogado) {
@@ -36,8 +39,8 @@ public class SeguidorController {
 	}
 
 	@GetMapping(value = "/todos-seguidores")
-	public ResponseEntity<List<SeguidoresOutputDTO>> buscarSeguidores(Integer id) {
-		return ResponseEntity.ok(seguidorService.buscarSeguidores(id));
+	public ResponseEntity<List<SeguidoresOutputDTO>> buscarSeguidores() {
+		return ResponseEntity.ok(seguidorService.buscarSeguidores(jwtUtils.getPrincipal()));
 	}
 
 	@GetMapping(value = "/todos-seguidos")
