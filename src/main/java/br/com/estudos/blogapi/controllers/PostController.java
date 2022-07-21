@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.estudos.blogapi.configs.security.JWTUtils;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
 import br.com.estudos.blogapi.services.PostService;
 import lombok.AllArgsConstructor;
@@ -24,29 +25,31 @@ public class PostController {
 
 	private final PostService postService;
 
+	private final JWTUtils jwtUtils;
+
 	@PostMapping
-	public ResponseEntity<Void> inserir(@RequestBody PostDTO postDTO, Integer idLogado) {
-		postService.inserir(postDTO, idLogado);
+	public ResponseEntity<Void> create(@RequestBody PostDTO postDTO) {
+		postService.create(postDTO, jwtUtils.getPrincipal());
 		return ResponseEntity.ok().build();
 	}
 
 	@PatchMapping
-	public ResponseEntity<Void> atualizar(@RequestBody PostDTO postDTO) {
-		postService.atualizar(postDTO);
+	public ResponseEntity<Void> update(@RequestBody PostDTO postDTO) {
+		postService.update(postDTO);
 		return ResponseEntity.ok().build();
 	}
 
-	@DeleteMapping
-	public ResponseEntity<Void> deletar(Integer idPost) {
-		postService.deletar(idPost);
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+		postService.delete(id);
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping(path = "/{apelido}")
-	public ResponseEntity<List<PostDTO>> buscarPostsDoUsuario(@PathVariable("apelido") String apelido,
-			@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
-			@RequestParam(value = "itensPorPagina", defaultValue = "10") Integer itensPorPagina) {
-		return ResponseEntity.ok(postService.buscarPostsDoUsuario(apelido, pagina, itensPorPagina));
+	@GetMapping(path = "/{nickname}")
+	public ResponseEntity<List<PostDTO>> findAllByUser(@PathVariable("nickname") String nickname,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "itensPerPage", defaultValue = "10") Integer itensPerPage) {
+		return ResponseEntity.ok(postService.findAllByUser(nickname, page, itensPerPage));
 	}
 
 }

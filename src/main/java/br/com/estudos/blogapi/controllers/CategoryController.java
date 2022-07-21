@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.estudos.blogapi.model.entities.Categoria;
-import br.com.estudos.blogapi.services.CategoriaService;
+import br.com.estudos.blogapi.model.entities.Category;
+import br.com.estudos.blogapi.services.CategoryService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/categories")
 @AllArgsConstructor
-public class CategoriaController {
+public class CategoryController {
 
-	private final CategoriaService categoriaService;
+	private final CategoryService categoryService;
 
 	@GetMapping
-	public ResponseEntity<List<Categoria>> buscarTodasCategorias() {
-		return ResponseEntity.ok(categoriaService.buscarTodasCategorias());
+	public ResponseEntity<List<Category>> findAll() {
+		return ResponseEntity.ok(categoryService.findAll());
 	}
 
 }

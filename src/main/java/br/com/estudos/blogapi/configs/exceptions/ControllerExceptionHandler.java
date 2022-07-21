@@ -10,15 +10,15 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.estudos.blogapi.handlers.NegocioException;
-import br.com.estudos.blogapi.handlers.RecursoNaoEncontradoException;
+import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(RecursoNaoEncontradoException.class)
-	public ResponseEntity<Object> handleRecursoNaoEncontradoException(RecursoNaoEncontradoException ex,
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<Object> handleRecursoNaoEncontradoException(ResourceNotFoundException ex,
 			WebRequest request) {
 
 		var headers = new HttpHeaders();
@@ -28,7 +28,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		var body = new ResponseError();
 
 		body.setCode(status.value());
-		body.setDescricao(ex.getMessage());
+		body.setDescription(ex.getMessage());
 		return handleExceptionInternal(ex, body, headers, status, request);
 	}
 
@@ -42,7 +42,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
 		var body = new ResponseError();
 		body.setCode(status.value());
-		body.setDescricao(ex.getMessage());
+		body.setDescription(ex.getMessage());
 		return handleExceptionInternal(ex, body, headers, status, request);
 	}
 

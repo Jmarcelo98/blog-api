@@ -18,22 +18,22 @@ public class PostDTO implements Serializable {
 	private Integer id;
 
 	@Lob
-	private byte[] miniatura;
+	private byte[] thumbnail;
 
-	private String descricao;
+	private String description;
 
-	private String titulo;
+	private String title;
 
-	private String conteudo;
+	private String content;
 
-	private Boolean isPublicado;
+	private Boolean isPublished;
 
-	private LocalDate publicadoEm;
+	private LocalDate publishedAt;
 	
-	private LocalDate criadoEm;
+	private LocalDate createdAt;
 
-	private LocalDate atualizadoEm;
+	private LocalDate updatedAt;
 
-	private CategoriaDTO categoria;
+	private CategoryDTO category;
 
 }

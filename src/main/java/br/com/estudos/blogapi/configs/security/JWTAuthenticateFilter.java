@@ -19,16 +19,16 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.estudos.blogapi.configs.security.service.DetalheUsuario;
-import br.com.estudos.blogapi.model.entities.Usuario;
+import br.com.estudos.blogapi.configs.security.service.UserDetail;
+import br.com.estudos.blogapi.model.entities.User;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
+public class JWTAuthenticateFilter extends UsernamePasswordAuthenticationFilter {
 
-	private static final int TOKEN_EXPIRACAO = 1800_000;
+	private static final int TOKEN_EXPIRATION = 1800_000;
 
-	public static final String TOKEN_SENHA = "261fcbc0-a023-46c8-a783-57d155d6363b";
+	public static final String TOKEN_PASSWORD = "261fcbc0-a023-46c8-a783-57d155d6363b";
 
 	private final AuthenticationManager authenticationManager;
 
@@ -38,10 +38,10 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 
 		try {
 
-			var usuario = new ObjectMapper().readValue(request.getInputStream(), Usuario.class);
+			var usuario = new ObjectMapper().readValue(request.getInputStream(), User.class);
 
-			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usuario.getApelido(),
-					usuario.getSenha(), new ArrayList<>()));
+			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usuario.getNickname(),
+					usuario.getPassword(), new ArrayList<>()));
 
 		} catch (IOException e) {
 			throw new RuntimeException("Falha ao autenticar usuario", e);
@@ -53,11 +53,11 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 
-		var detalheUsuario = (DetalheUsuario) authResult.getPrincipal();
+		var detalheUsuario = (UserDetail) authResult.getPrincipal();
 
 		var token = JWT.create().withSubject(detalheUsuario.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRACAO))
-				.sign(Algorithm.HMAC512(TOKEN_SENHA));
+				.withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
+				.sign(Algorithm.HMAC512(TOKEN_PASSWORD));
 
 		response.getWriter().write(token);
 		response.getWriter().flush();

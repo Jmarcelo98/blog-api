@@ -5,19 +5,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.com.estudos.blogapi.services.UsuarioService;
+import br.com.estudos.blogapi.services.UserService;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class DetalheUsuarioImpl implements UserDetailsService {
+public class UserDetailImpl implements UserDetailsService {
 
-	private final UsuarioService usuarioService;
+	private final UserService userService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		var usuario = usuarioService.buscarPorApelido(username);
-		return new DetalheUsuario(usuario);
+		var user = userService.findByNickname(username);
+		return new UserDetail(user);
 	}
 
 }

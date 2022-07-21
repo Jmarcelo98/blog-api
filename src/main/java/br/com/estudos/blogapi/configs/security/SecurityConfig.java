@@ -12,7 +12,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
-import br.com.estudos.blogapi.configs.security.service.DetalheUsuarioImpl;
+import br.com.estudos.blogapi.configs.security.service.UserDetailImpl;
 import lombok.AllArgsConstructor;
 
 @SuppressWarnings("deprecation")
@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private final DetalheUsuarioImpl detalheUsuarioImpl;
+	private final UserDetailImpl userDetailImpl;
 	private final PasswordEncoder passwordEncoder;
 
 	private final String[] ACESSO = { "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
@@ -28,16 +28,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(detalheUsuarioImpl).passwordEncoder(passwordEncoder);
+		auth.userDetailsService(userDetailImpl).passwordEncoder(passwordEncoder);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable();
 		http.csrf().disable().authorizeHttpRequests().antMatchers(HttpMethod.POST, "/login").permitAll()
-				.antMatchers(HttpMethod.GET, "/categorias").permitAll().antMatchers(ACESSO).permitAll().anyRequest()
-				.authenticated().and().addFilter(new JWTAutenticarFilter(authenticationManager()))
-				.addFilter(new JWTValidarFilter(authenticationManager())).sessionManagement()
+				.antMatchers(HttpMethod.GET, "/categories").permitAll().antMatchers(ACESSO).permitAll().anyRequest()
+				.authenticated().and().addFilter(new JWTAuthenticateFilter(authenticationManager()))
+				.addFilter(new JWTValidateFilter(authenticationManager())).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 

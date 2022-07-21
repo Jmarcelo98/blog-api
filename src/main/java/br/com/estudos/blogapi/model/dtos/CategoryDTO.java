@@ -1,4 +1,4 @@
-package br.com.estudos.blogapi.model.dtos.output;
+package br.com.estudos.blogapi.model.dtos;
 
 import java.io.Serializable;
 
@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioOutputDTO implements Serializable {
+public class CategoryDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String apelido;
+	private Integer id;
 
-	private byte[] foto;
+	private String description;
 
 }

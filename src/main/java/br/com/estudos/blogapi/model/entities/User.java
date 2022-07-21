@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,27 +26,28 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario implements Serializable {
+@Table(name = "USERS")
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private String nome;
+	private String name;
 
 	@Column(nullable = false, unique = true)
-	private String apelido;
+	private String nickname;
 
 	@Column(nullable = false)
-	private String senha;
+	private String password;
 
 	private Boolean isPremium;
 
 	@Lob
-	private byte[] foto;
+	private byte[] profilePicture;
 
-	private String biografia;
+	private String biography;
 
 	private String urlLinkedin;
 
@@ -54,20 +56,20 @@ public class Usuario implements Serializable {
 	private String urlWebSite;
 
 	@Column(nullable = false, updatable = false)
-	private LocalDate criadoEm;
+	private LocalDate createdAt;
 
-	private LocalDate atualizadoEm;
+	private LocalDate updatedAt;
 
-	@OneToMany(mappedBy = "usuario", orphanRemoval = true)
+	@OneToMany(mappedBy = "user", orphanRemoval = true)
 	@JsonIgnore
 	private List<Post> posts;
 
-	@OneToMany(mappedBy = "segue", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "follow", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<Seguidor> seguidores;
+	private List<Follower> followers;
 
-	@OneToMany(mappedBy = "seguido", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "followed", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<Seguidor> seguindo;
+	private List<Follower> following;
 
 }

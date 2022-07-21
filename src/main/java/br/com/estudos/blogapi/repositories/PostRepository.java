@@ -6,10 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.estudos.blogapi.model.entities.Post;
-import br.com.estudos.blogapi.model.entities.Usuario;
+import br.com.estudos.blogapi.model.entities.User;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-	List<Post> findAllByUsuarioAndIsPublicadoTrueOrderByCriadoEm(Usuario usuario, Pageable pageRequest);
+	List<Post> findAllByUserAndIsPublishedTrueOrderByCreatedAt(User user, Pageable pageRequest);
 
 }

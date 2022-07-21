@@ -6,17 +6,17 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.com.estudos.blogapi.model.entities.Usuario;
+import br.com.estudos.blogapi.model.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class DetalheUsuario implements UserDetails {
+public class UserDetail implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	private final Usuario usuario;
+	private final User user;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -24,21 +24,16 @@ public class DetalheUsuario implements UserDetails {
 		return new ArrayList<>();
 	}
 
-	public Integer getId() {
-		// TODO Auto-generated method stub
-		return usuario.getId();
-	}
-
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return usuario.getSenha();
+		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return usuario.getApelido();
+		return user.getNickname();
 	}
 
 	@Override

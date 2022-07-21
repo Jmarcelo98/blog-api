@@ -34,38 +34,38 @@ public class Post implements Serializable {
 	private Integer id;
 
 	@Lob
-	private byte[] miniatura;
+	private byte[] thumbnail;
 
 	@Column(nullable = false)
-	private String descricao;
+	private String description;
 
 	@Column(nullable = false)
-	private String titulo;
+	private String title;
 
 	@Column(columnDefinition = "TEXT", nullable = false)
-	private String conteudo;
+	private String content;
 
-	private Boolean isPublicado;
+	private Boolean isPublished;
 
-	private LocalDate publicadoEm;
+	private LocalDate publishedAt;
 
 	@Column(nullable = false, updatable = false)
-	private LocalDate criadoEm;
+	private LocalDate createdAt;
 
-	private LocalDate atualizadoEm;
-
-	@OneToMany(mappedBy = "post", orphanRemoval = true)
-	private List<Comentario> comentarios;
+	private LocalDate updatedAt;
 
 	@OneToMany(mappedBy = "post", orphanRemoval = true)
-	private List<Curtida> curtidas;
+	private List<Comment> comments;
+
+	@OneToMany(mappedBy = "post", orphanRemoval = true)
+	private List<Liked> likeds;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "id_usuario", nullable = false)
-	private Usuario usuario;
+	@JoinColumn(name = "id_user", nullable = false)
+	private User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_categoria", nullable = false, updatable = false)
-	private Categoria categoria;
+	@JoinColumn(name = "id_category", nullable = false, updatable = false)
+	private Category category;
 
 }

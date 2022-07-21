@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SeguidoresOutputDTO implements Serializable {
+public class FollowingOutputDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private UsuarioOutputDTO segue;
+	private UserOutputDTO followed;
 
 }

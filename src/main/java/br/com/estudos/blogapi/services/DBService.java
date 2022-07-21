@@ -7,78 +7,78 @@ import java.util.Arrays;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.estudos.blogapi.model.entities.Categoria;
-import br.com.estudos.blogapi.model.entities.Comentario;
-import br.com.estudos.blogapi.model.entities.Curtida;
+import br.com.estudos.blogapi.model.entities.Category;
+import br.com.estudos.blogapi.model.entities.Comment;
+import br.com.estudos.blogapi.model.entities.Follower;
+import br.com.estudos.blogapi.model.entities.Liked;
 import br.com.estudos.blogapi.model.entities.Post;
-import br.com.estudos.blogapi.model.entities.Seguidor;
-import br.com.estudos.blogapi.model.entities.Usuario;
-import br.com.estudos.blogapi.repositories.CategoriaRepository;
-import br.com.estudos.blogapi.repositories.ComentarioRepository;
-import br.com.estudos.blogapi.repositories.CurtidaRepository;
+import br.com.estudos.blogapi.model.entities.User;
+import br.com.estudos.blogapi.repositories.CategoryRepository;
+import br.com.estudos.blogapi.repositories.CommentRepository;
+import br.com.estudos.blogapi.repositories.FollowerRepository;
+import br.com.estudos.blogapi.repositories.LikedRepository;
 import br.com.estudos.blogapi.repositories.PostRepository;
-import br.com.estudos.blogapi.repositories.SeguidorRepository;
-import br.com.estudos.blogapi.repositories.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
+import br.com.estudos.blogapi.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class DBService {
 
-	private final UsuarioRepository usuarioRepository;
+	private final UserRepository userRepository;
 
-	private final CategoriaRepository categoriaRepository;
+	private final CategoryRepository categoryRepository;
 
 	private final PostRepository postRepository;
 
-	private final CurtidaRepository curtidaRepository;
+	private final LikedRepository likedRepository;
 
-	private final ComentarioRepository comentarioRepository;
+	private final CommentRepository commentRepository;
 
-	private final SeguidorRepository seguidorRepository;
+	private final FollowerRepository followerRepository;
 
-	public void instanciarBandoDeDados() {
+	public void instantiateDatabase() {
 
-		LocalDate agora = LocalDate.now();
+		LocalDate now = LocalDate.now();
 
-		LocalDate dateMarco2021 = LocalDate.of(2022, Month.JANUARY, 16);
-		LocalDate dateMaio2021 = LocalDate.of(2022, Month.JANUARY, 16);
+		LocalDate dateCreatedJoao = LocalDate.of(2022, Month.JANUARY, 16);
+		LocalDate dateCreatedSena = LocalDate.of(2022, Month.JANUARY, 16);
 
 		LocalDate dateJaneiro = LocalDate.of(2022, Month.JANUARY, 16);
 		LocalDate dateFevereiro = LocalDate.of(2021, Month.FEBRUARY, 16);
 		LocalDate dateMarco = LocalDate.of(2021, Month.MARCH, 16);
-		
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		var usuario = Usuario.builder().id(null).apelido("joao").nome("João Marcelo").criadoEm(dateMarco2021)
-				.atualizadoEm(null).biografia("Dev Full Stack Java").foto(null).isPremium(false).posts(null)
-				.senha(encoder.encode("123")).urlInstagram("https://www.instagram.com/jmarcelo098/")
-				.urlLinkedin("www.linkedin.com/in/jmarcelo98/").urlWebSite("https://jmarcelo98.github.io/portfolio/")
+		var user = User.builder().id(null).nickname("joao").name("João Marcelo").createdAt(dateCreatedJoao)
+				.updatedAt(null).biography("Dev Full Stack Java").profilePicture(null).isPremium(false)
+				.password(encoder.encode("123")).urlInstagram("https:www.instagram.com/jmarcelo098/")
+				.urlLinkedin("www.linkedin.com/in/jmarcelo98/").urlWebSite("https:jmarcelo98.github.io/portfolio/")
 				.build();
 
-		var usuario1 = Usuario.builder().id(null).apelido("senavs").nome("Matheus Sena").criadoEm(dateMaio2021)
-				.atualizadoEm(null).biografia("Engenheiro de Software").foto(null).isPremium(false).posts(null)
-				.senha(encoder.encode("123")).urlInstagram("https://www.instagram.com/senavs/")
+		var user1 = User.builder().id(null).nickname("senavs").name("Matheus Sena").createdAt(dateCreatedSena)
+				.updatedAt(null).biography("Engenheiro de Software").profilePicture(null).isPremium(false)
+				.password(encoder.encode("123")).urlInstagram("https:www.instagram.com/senavs/")
 				.urlLinkedin("www.linkedin.com/in/senavs/").urlWebSite("senavs.com").build();
 
-		var usuario2 = Usuario.builder().id(null).apelido(".Marcos").nome("Marcos Giovanny").criadoEm(agora)
-				.atualizadoEm(null).biografia("Estagiário Dev").foto(null).isPremium(false).posts(null).senha(encoder.encode("123"))
-				.urlInstagram("https://www.instagram.com/marcosgiovanny/")
+		var user2 = User.builder().id(null).nickname(".Marcos").name("Marcos Giovanny").createdAt(now).updatedAt(null)
+				.biography("Estagiário Dev").profilePicture(null).isPremium(false).password(encoder.encode("123"))
+				.urlInstagram("https:www.instagram.com/marcosgiovanny/")
 				.urlLinkedin("www.linkedin.com/in/marcos-giovanny/").urlWebSite(null).build();
 
-		usuarioRepository.saveAll(Arrays.asList(usuario, usuario1, usuario2));
+		userRepository.saveAll(Arrays.asList(user, user1, user2));
 
-		var categoria = Categoria.builder().id(null).descricao("Futebol").build();
-		var categoria1 = Categoria.builder().id(null).descricao("Música").build();
-		var categoria2 = Categoria.builder().id(null).descricao("eSports").build();
-		var categoria3 = Categoria.builder().id(null).descricao("Tecnologia").build();
+		var category = Category.builder().id(null).description("Futebol").build();
+		var category1 = Category.builder().id(null).description("Música").build();
+		var category2 = Category.builder().id(null).description("eSports").build();
+		var category3 = Category.builder().id(null).description("Tecnologia").build();
 
-		categoriaRepository.saveAll(Arrays.asList(categoria, categoria1, categoria2, categoria3));
+		categoryRepository.saveAll(Arrays.asList(category, category1, category2, category3));
 
-		var post = Post.builder().id(null).criadoEm(dateJaneiro).atualizadoEm(null).miniatura(null)
-				.descricao("O PODER DA GESTÃO NO FUTEBOL").categoria(categoria).titulo("SAF FUTEBOL").isPublicado(true)
-				.publicadoEm(dateJaneiro).usuario(usuario)
-				.conteudo("É de conhecimento de todos, o grande roubo que aconteceu no "
+		var post = Post.builder().id(null).createdAt(dateJaneiro).updatedAt(null).thumbnail(null)
+				.description("O PODER DA GESTÃO NO FUTEBOL").category(category).title("SAF FUTEBOL").isPublished(true)
+				.publishedAt(dateJaneiro).user(user)
+				.content("É de conhecimento de todos, o grande roubo que aconteceu no "
 						+ "Cruzeiro em 2019 pelos seus gestores! Após anos turbulentos e fracassados da equipe mineira, em dezembro de 2021,"
 						+ " o clube mineiro por meio de votação do seus conselheiros, conseguiu alterar o estatuto do clube, permitindo a "
 						+ "venda de 90% das ações da SAF, a qual foi adquirida por Ronaldo Fenômeno. Em 2022, a equipe celeste fez uma campanha boa na Copa do Brasil "
@@ -87,42 +87,42 @@ public class DBService {
 						+ "#ObrigadoRonaldo")
 				.build();
 
-		var post2 = Post.builder().id(null).criadoEm(dateJaneiro).atualizadoEm(null).miniatura(null)
-				.descricao("A Imperial é isso tudo mesmo?").categoria(categoria2).titulo("IMPERIAL").isPublicado(true)
-				.publicadoEm(dateFevereiro).usuario(usuario)
-				.conteudo(
+		var post2 = Post.builder().id(null).createdAt(dateJaneiro).updatedAt(null).thumbnail(null)
+				.description("A Imperial é isso tudo mesmo?").category(category2).title("IMPERIAL").isPublished(true)
+				.publishedAt(dateFevereiro).user(user)
+				.content(
 						"A Imperial fez um Major incrivel, mas cai de produção, será que acabou a Imperial? Chegamos no momentos "
 								+ "em que acontecerá trocas de bonecos?")
 				.build();
 
-		var post3 = Post.builder().id(null).criadoEm(dateJaneiro).atualizadoEm(null).miniatura(null)
-				.descricao("A FURIA VAI GANHAR O MAJOR").categoria(categoria2).titulo("MAJOR RIO 2022")
-				.isPublicado(false).publicadoEm(null).usuario(usuario)
-				.conteudo("A Furia finalmente saiu do TOP 8 das competições para se sagrar CAMPEÃ MUNDIAL DE CSGOS")
+		var post3 = Post.builder().id(null).createdAt(dateJaneiro).updatedAt(null).thumbnail(null)
+				.description("A FURIA VAI GANHAR O MAJOR").category(category2).title("MAJOR RIO 2022")
+				.isPublished(false).publishedAt(null).user(user)
+				.content("A Furia finalmente saiu do TOP 8 das competições para se sagrar CAMPEÃ MUNDIAL DE CSGOS")
 				.build();
 
 		postRepository.saveAll(Arrays.asList(post, post2, post3));
 
-		var comentario = Comentario.builder().id(null).criadoEm(dateFevereiro).post(post).usuario(usuario1)
-				.comentario("Muito bom o POST! A SAF é muito importante para o clubes brasileiros").build();
+		var comment = Comment.builder().id(null).createdAt(dateFevereiro).post(post).user(user1)
+				.comment("Muito bom o POST! A SAF é muito importante para o clubes brasileiros").build();
 
-		var comentario1 = Comentario.builder().id(null).criadoEm(dateMarco).post(post).usuario(usuario2).comentario(
+		var comment1 = Comment.builder().id(null).createdAt(dateMarco).post(post).user(user2).comment(
 				"Creio que a SAF irá ajudar, mas precisamos lembrar que são empresários, vão pensar somente no bolso deles e não na torcida")
 				.build();
 
-		comentarioRepository.saveAll(Arrays.asList(comentario, comentario1));
+		commentRepository.saveAll(Arrays.asList(comment, comment1));
 
-		var curtida = Curtida.builder().id(null).criadoEm(dateFevereiro).post(post).usuario(usuario1).build();
-		var curtida1 = Curtida.builder().id(null).criadoEm(dateMarco).post(post).usuario(usuario2).build();
+		var liked = Liked.builder().id(null).createdAt(dateFevereiro).post(post).user(user1).build();
+		var liked1 = Liked.builder().id(null).createdAt(dateMarco).post(post).user(user2).build();
 
-		curtidaRepository.saveAll(Arrays.asList(curtida, curtida1));
+		likedRepository.saveAll(Arrays.asList(liked, liked1));
 
-		var seguidor = Seguidor.builder().id(null).segue(usuario).seguido(usuario1).build();
-		var seguidor1 = Seguidor.builder().id(null).segue(usuario1).seguido(usuario).build();
-		var seguidor2 = Seguidor.builder().id(null).segue(usuario2).seguido(usuario1).build();
-		var seguidor3 = Seguidor.builder().id(null).segue(usuario2).seguido(usuario).build();
+		var follower = Follower.builder().id(null).follow(user).followed(user1).build();
+		var follower1 = Follower.builder().id(null).follow(user1).followed(user).build();
+		var follower2 = Follower.builder().id(null).follow(user2).followed(user1).build();
+		var follower3 = Follower.builder().id(null).follow(user2).followed(user).build();
 
-		seguidorRepository.saveAll(Arrays.asList(seguidor, seguidor1, seguidor2, seguidor3));
+		followerRepository.saveAll(Arrays.asList(follower, follower1, follower2, follower3));
 
 	}
 

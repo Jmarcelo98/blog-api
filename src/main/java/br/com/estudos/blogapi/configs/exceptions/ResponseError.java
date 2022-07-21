@@ -12,6 +12,6 @@ import lombok.Setter;
 public class ResponseError {
 
 	private int code;
-	private String descricao;
+	private String description;
 
 }

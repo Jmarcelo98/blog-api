@@ -17,12 +17,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 //@AllArgsConstructor
-public class JWTValidarFilter extends BasicAuthenticationFilter {
+public class JWTValidateFilter extends BasicAuthenticationFilter {
 
 	private final static String HEADER_ATRIBUTO = "Authorization";
 	private final static String ATRIBUTO_PREFIXO = "Bearer ";
 
-	public JWTValidarFilter(AuthenticationManager authenticationManager) {
+	public JWTValidateFilter(AuthenticationManager authenticationManager) {
 		super(authenticationManager);
 		// TODO Auto-generated constructor stub
 	}
@@ -54,7 +54,7 @@ public class JWTValidarFilter extends BasicAuthenticationFilter {
 
 	private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {
 
-		var usuario = JWT.require(Algorithm.HMAC512(JWTAutenticarFilter.TOKEN_SENHA)).build().verify(token)
+		var usuario = JWT.require(Algorithm.HMAC512(JWTAuthenticateFilter.TOKEN_PASSWORD)).build().verify(token)
 				.getSubject();
 
 		if (usuario == null) {

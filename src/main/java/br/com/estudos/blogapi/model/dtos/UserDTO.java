@@ -12,17 +12,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDTO implements Serializable {
+public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String nome;
+	private String name;
 
 	@Lob
-	private byte[] foto;
+	private byte[] profilePicture;
 
-	private String biografia;
+	private Boolean isPremium;
 
-	private LocalDate atualizadoEm;
+	private String biography;
+
+	private LocalDate updatedAt;
 
 	private String urlLinkedin;
 

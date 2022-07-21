@@ -8,7 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import br.com.estudos.blogapi.handlers.RecursoNaoEncontradoException;
+import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
 import br.com.estudos.blogapi.mappers.PostMapper;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
 import br.com.estudos.blogapi.repositories.PostRepository;
@@ -22,14 +22,14 @@ public class PostService {
 
 	private final PostRepository postRepository;
 
-	private final UsuarioService usuarioService;
+	private final UserService userService;
 
 	@Transactional
-	public void inserir(PostDTO postDTO, Integer idLogado) {
+	public void create(PostDTO postDTO, String logged) {
 
-		var usuario = usuarioService.buscarPorId(idLogado);
+		var userLogged = userService.findByNickname(logged);
 		var post = PostMapper.INSTANCE.DTOToEntity(postDTO);
-		post.setUsuario(usuario);
+		post.setUser(userLogged);
 		postRepository.save(post);
 
 		log.info("Post cadastrado com sucesso");
@@ -37,34 +37,34 @@ public class PostService {
 	}
 
 	@Transactional
-	public void atualizar(PostDTO postDTO) {
+	public void update(PostDTO postDTO) {
 
 		var post = postRepository.findById(postDTO.getId())
-				.orElseThrow(() -> new RecursoNaoEncontradoException("Post não encontrado através do ID"));
+				.orElseThrow(() -> new ResourceNotFoundException("Post não encontrado através do ID"));
 
 		BeanUtils.copyProperties(postDTO, post);
 
 		postRepository.save(post);
-		
+
 		log.info("Post atualizado com sucesso");
 
 	}
 
 	@Transactional
-	public void deletar(Integer idPost) {
+	public void delete(Integer idPost) {
 		postRepository.deleteById(idPost);
 		log.info("Post deletado com sucesso");
 	}
 
-	public List<PostDTO> buscarPostsDoUsuario(String apelido, Integer pagina, Integer itensPorPagina) {
+	public List<PostDTO> findAllByUser(String nickname, Integer page, Integer itensPerPage) {
 
-		var usuario = usuarioService.buscarPorApelido(apelido);
+		var user = userService.findByNickname(nickname);
 
-		PageRequest pageRequest = PageRequest.of(pagina, itensPorPagina);
+		PageRequest pageRequest = PageRequest.of(page, itensPerPage);
 
-		var listaPost = postRepository.findAllByUsuarioAndIsPublicadoTrueOrderByCriadoEm(usuario, pageRequest);
+		var listPost = postRepository.findAllByUserAndIsPublishedTrueOrderByCreatedAt(user, pageRequest);
 
-		return PostMapper.INSTANCE.listaEntityToListaDTO(listaPost);
+		return PostMapper.INSTANCE.listaEntityToListaDTO(listPost);
 
 	}
 

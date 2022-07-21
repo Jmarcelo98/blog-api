@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comentario implements Serializable {
+public class Liked implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -30,17 +30,14 @@ public class Comentario implements Serializable {
 	private Integer id;
 
 	@Column(nullable = false, updatable = false)
-	private LocalDate criadoEm;
-
-	@Column(nullable = false)
-	private String comentario;
+	private LocalDate createdAt;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_post", nullable = false)
 	private Post post;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario", nullable = false)
-	private Usuario usuario;
+	@JoinColumn(name = "id_users", nullable = false)
+	private User user;
 
 }
