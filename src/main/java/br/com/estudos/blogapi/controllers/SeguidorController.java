@@ -23,34 +23,34 @@ import lombok.AllArgsConstructor;
 public class SeguidorController {
 
 	private final SeguidorService seguidorService;
-	
+
 	private final JWTUtils jwtUtils;
 
 	@PostMapping(path = "/{apelido}")
-	public ResponseEntity<Void> inserir(@PathVariable("apelido") String apelido, Integer idLogado) {
-		seguidorService.inserir(idLogado, apelido);
+	public ResponseEntity<Void> inserir(@PathVariable("apelido") String apelidoASeguir) {
+		seguidorService.inserir(apelidoASeguir, jwtUtils.getPrincipal());
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping(path = "/{apelido}")
-	public ResponseEntity<Void> deletar(@PathVariable("apelido") String apelido, Integer idLogado) {
-		seguidorService.deletar(idLogado, apelido);
+	public ResponseEntity<Void> deletar(@PathVariable("apelido") String apelidoADesseguir) {
+		seguidorService.deletar(apelidoADesseguir, jwtUtils.getPrincipal());
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping(value = "/todos-seguidores")
-	public ResponseEntity<List<SeguidoresOutputDTO>> buscarSeguidores() {
-		return ResponseEntity.ok(seguidorService.buscarSeguidores(jwtUtils.getPrincipal()));
+	@GetMapping(value = "/todos-seguidores/{apelido}")
+	public ResponseEntity<List<SeguidoresOutputDTO>> buscarSeguidores(@PathVariable("apelido") String apelido) {
+		return ResponseEntity.ok(seguidorService.buscarSeguidores(apelido));
 	}
 
-	@GetMapping(value = "/todos-seguidos")
-	public ResponseEntity<List<SeguindoOutputDTO>> buscarSeguidos(Integer id) {
-		return ResponseEntity.ok(seguidorService.buscarSeguindo(id));
+	@GetMapping(value = "/todos-seguidos/{apelido}")
+	public ResponseEntity<List<SeguindoOutputDTO>> buscarSeguidos(@PathVariable("apelido") String apelido) {
+		return ResponseEntity.ok(seguidorService.buscarSeguindo(apelido));
 	}
 
-	@GetMapping(value = "/quantidade-seguidor")
-	public ResponseEntity<Map<String, Integer>> buscarQuantidadeSeguidor(Integer id) {
-		return ResponseEntity.ok(seguidorService.buscarQuantidadeSeguidor(id));
+	@GetMapping(value = "/total/{apelido}")
+	public ResponseEntity<Map<String, Integer>> buscarQuantidadeSeguidor(@PathVariable("apelido") String apelido) {
+		return ResponseEntity.ok(seguidorService.buscarQuantidadeSeguidor(apelido));
 	}
 
 }
