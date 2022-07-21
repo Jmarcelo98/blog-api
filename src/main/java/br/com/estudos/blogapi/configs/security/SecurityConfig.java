@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final PasswordEncoder passwordEncoder;
 
 	private final String[] ACESSO = { "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
-			"/configuration/security", "/swagger-ui.html", "/webjars/**" };
+			"/configuration/security", "/swagger-ui.html", "/webjars/**", "/h2/**" };
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,9 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.headers().frameOptions().disable();
 		http.csrf().disable().authorizeHttpRequests().antMatchers(HttpMethod.POST, "/login").permitAll()
-				.antMatchers(HttpMethod.GET, "/categorias").permitAll().antMatchers(ACESSO).permitAll()
-				.anyRequest().authenticated().and().addFilter(new JWTAutenticarFilter(authenticationManager()))
+				.antMatchers(HttpMethod.GET, "/categorias").permitAll().antMatchers(ACESSO).permitAll().anyRequest()
+				.authenticated().and().addFilter(new JWTAutenticarFilter(authenticationManager()))
 				.addFilter(new JWTValidarFilter(authenticationManager())).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
