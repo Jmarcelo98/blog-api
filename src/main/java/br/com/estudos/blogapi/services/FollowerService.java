@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import br.com.estudos.blogapi.handlers.NegocioException;
+import br.com.estudos.blogapi.handlers.BusinessException;
 import br.com.estudos.blogapi.mappers.output.FollowersOutputMapper;
 import br.com.estudos.blogapi.mappers.output.FollowingOutputMapper;
 import br.com.estudos.blogapi.model.dtos.output.FollowersOutputDTO;
@@ -32,7 +32,7 @@ public class FollowerService {
 	public void create(String nickname, String logged) {
 
 		if (isSameUser(nickname, logged)) {
-			throw new NegocioException("Você não pode desseguir a você mesmo");
+			throw new BusinessException("Você não pode desseguir a você mesmo");
 		}
 
 		var userToFollow = findUserByNickname(nickname);
@@ -41,7 +41,7 @@ public class FollowerService {
 
 		if (isFollow(userLogged, userToFollow)) {
 			log.error("O " + userLogged.getNickname() + " já segue o " + userToFollow.getNickname());
-			throw new NegocioException("Você já segue este usuário");
+			throw new BusinessException("Você já segue este usuário");
 		}
 
 		var follow = Follower.builder().id(null).follow(userLogged).followed(userToFollow).build();
@@ -55,7 +55,7 @@ public class FollowerService {
 	public void delete(String nickname, String logged) {
 
 		if (isSameUser(nickname, logged)) {
-			throw new NegocioException("Você não pode desseguir a você mesmo");
+			throw new BusinessException("Você não pode desseguir a você mesmo");
 		}
 
 		var userToUnfollow = findUserByNickname(nickname);
@@ -64,7 +64,7 @@ public class FollowerService {
 
 		if (!isFollow(userLogged, userToUnfollow)) {
 			log.error("O " + userLogged.getNickname() + " não segue o " + userToUnfollow.getNickname());
-			throw new NegocioException("Você não segue este usuário para poder desseguir");
+			throw new BusinessException("Você não segue este usuário para poder desseguir");
 		}
 
 		var unfollow = followerRepository.findByFollowAndFollowed(userLogged, userToUnfollow);

@@ -8,9 +8,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import br.com.estudos.blogapi.handlers.ForbiddenException;
 import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
 import br.com.estudos.blogapi.mappers.PostMapper;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
+import br.com.estudos.blogapi.model.entities.User;
 import br.com.estudos.blogapi.repositories.PostRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,10 +39,13 @@ public class PostService {
 	}
 
 	@Transactional
-	public void update(PostDTO postDTO) {
+	public void update(PostDTO postDTO, String logged) {
 
-		var post = postRepository.findById(postDTO.getId())
-				.orElseThrow(() -> new ResourceNotFoundException("Post não encontrado através do ID"));
+//		if (!itYourPost(postDTO.getId(), logged)) {
+//			throw new NegocioException("Impossível editar um POST que não é seu");
+//		}
+
+		var post = postRepository.findById(postDTO.getId()).get();
 
 		BeanUtils.copyProperties(postDTO, post);
 
@@ -51,7 +56,12 @@ public class PostService {
 	}
 
 	@Transactional
-	public void delete(Integer idPost) {
+	public void delete(Integer idPost, String logged) {
+
+		if (!itYourPost(idPost, logged)) {
+			throw new ForbiddenException("Impossível apagar um POST que não é seu");
+		}
+
 		postRepository.deleteById(idPost);
 		log.info("Post deletado com sucesso");
 	}
@@ -66,6 +76,24 @@ public class PostService {
 
 		return PostMapper.INSTANCE.listaEntityToListaDTO(listPost);
 
+	}
+
+	private Boolean itYourPost(Integer idPost, String logged) {
+
+		var post = postRepository.findById(idPost)
+				.orElseThrow(() -> new ResourceNotFoundException("Post não encontrado através do ID"));
+		
+		var user = findUserByNickname(logged);
+
+		if (user == post.getUser()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private User findUserByNickname(String nickname) {
+		return userService.findByNickname(nickname);
 	}
 
 }

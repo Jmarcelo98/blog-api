@@ -35,13 +35,13 @@ public class PostController {
 
 	@PatchMapping
 	public ResponseEntity<Void> update(@RequestBody PostDTO postDTO) {
-		postService.update(postDTO);
+		postService.update(postDTO, jwtUtils.getPrincipal());
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-		postService.delete(id);
+		postService.delete(id, jwtUtils.getPrincipal());
 		return ResponseEntity.ok().build();
 	}
 

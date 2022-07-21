@@ -8,7 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.estudos.blogapi.handlers.NegocioException;
+import br.com.estudos.blogapi.handlers.BusinessException;
 import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
 import br.com.estudos.blogapi.model.dtos.UserDTO;
 import br.com.estudos.blogapi.model.dtos.input.UserRegistrationInputDTO;
@@ -31,7 +31,7 @@ public class UserService {
 
 		if (existsByNickname(userRegistrationInputDTO.getNickname())) {
 			log.error("Apelido: " + userRegistrationInputDTO.getNickname() + " já existe");
-			throw new NegocioException("Apelido já existe");
+			throw new BusinessException("Apelido já existe");
 		}
 
 		var newUser = User.builder().nickname(userRegistrationInputDTO.getNickname()).isPremium(false)

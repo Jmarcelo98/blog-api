@@ -97,7 +97,7 @@ public class DBService {
 
 		var post3 = Post.builder().id(null).createdAt(dateJaneiro).updatedAt(null).thumbnail(null)
 				.description("A FURIA VAI GANHAR O MAJOR").category(category2).title("MAJOR RIO 2022")
-				.isPublished(false).publishedAt(null).user(user)
+				.isPublished(false).publishedAt(null).user(user2)
 				.content("A Furia finalmente saiu do TOP 8 das competições para se sagrar CAMPEÃ MUNDIAL DE CSGOS")
 				.build();
 
