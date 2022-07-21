@@ -8,8 +8,8 @@ import br.com.estudos.blogapi.model.entities.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-	Optional<Usuario> findByApelido(String apelido);
+	Optional<Usuario> findByApelidoIgnoreCase(String apelido);
 
-	Boolean existsByApelido(String apelido);
+	Boolean existsByApelidoIgnoreCase(String apelido);
 
 }

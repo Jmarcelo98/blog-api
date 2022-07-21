@@ -63,12 +63,12 @@ public class UsuarioService {
 	}
 
 	public Usuario buscarPorApelido(String apelido) {
-		return usuarioRepository.findByApelido(apelido)
+		return usuarioRepository.findByApelidoIgnoreCase(apelido)
 				.orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado através do apelido"));
 	}
 
 	private Boolean existePeloApelido(String apelido) {
-		return usuarioRepository.existsByApelido(apelido);
+		return usuarioRepository.existsByApelidoIgnoreCase(apelido);
 	}
 
 }
