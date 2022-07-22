@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.com.estudos.blogapi.handlers.ForbiddenException;
-import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
 import br.com.estudos.blogapi.mappers.PostMapper;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
 import br.com.estudos.blogapi.model.entities.User;
@@ -41,9 +40,11 @@ public class PostService {
 	@Transactional
 	public void update(PostDTO postDTO, String logged) {
 
-//		if (!itYourPost(postDTO.getId(), logged)) {
-//			throw new NegocioException("Impossível editar um POST que não é seu");
-//		}
+		var user = findUserByNickname(logged);
+
+		if (!itYourPost(postDTO.getId(), user.getId())) {
+			throw new ForbiddenException("Impossível editar um POST que não é seu");
+		}
 
 		var post = postRepository.findById(postDTO.getId()).get();
 
@@ -58,7 +59,9 @@ public class PostService {
 	@Transactional
 	public void delete(Integer idPost, String logged) {
 
-		if (!itYourPost(idPost, logged)) {
+		var user = findUserByNickname(logged);
+
+		if (!itYourPost(idPost, user.getId())) {
 			throw new ForbiddenException("Impossível apagar um POST que não é seu");
 		}
 
@@ -78,18 +81,10 @@ public class PostService {
 
 	}
 
-	private Boolean itYourPost(Integer idPost, String logged) {
+	private Boolean itYourPost(Integer idPost, Integer idUsuario) {
 
-		var post = postRepository.findById(idPost)
-				.orElseThrow(() -> new ResourceNotFoundException("Post não encontrado através do ID"));
-		
-		var user = findUserByNickname(logged);
+		return postRepository.itYourPost(idPost, idUsuario);
 
-		if (user == post.getUser()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private User findUserByNickname(String nickname) {
