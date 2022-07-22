@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -64,11 +63,19 @@ public class User implements Serializable {
 	@JsonIgnore
 	private List<Post> posts;
 
-	@OneToMany(mappedBy = "follow", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "follow", orphanRemoval = true)
 	@JsonIgnore
 	private List<Follower> followers;
+	
+	@OneToMany(mappedBy = "user", orphanRemoval = true)
+	@JsonIgnore
+	private List<Comment> comments;
+	
+	@OneToMany(mappedBy = "user", orphanRemoval = true)
+	@JsonIgnore
+	private List<Liked> likeds;
 
-	@OneToMany(mappedBy = "followed", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "followed", orphanRemoval = true)
 	@JsonIgnore
 	private List<Follower> following;
 
