@@ -57,8 +57,8 @@ public class UserService {
 	}
 
 	@Transactional
-	public void delete(Integer id) {
-		userRepository.deleteById(id);
+	public void delete(String nickname) {
+		userRepository.deleteByNickname(nickname);
 		log.info("Usuário deletado com sucesso");
 	}
 

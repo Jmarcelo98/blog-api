@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	Boolean existsByNicknameIgnoreCase(String nickname);
 
+	void deleteByNickname(String nickname);
+
 }
