@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable();
+		http.cors().configurationSource(RequestBody -> new CorsConfiguration().applyPermitDefaultValues());
 		http.csrf().disable().authorizeHttpRequests().antMatchers(HttpMethod.POST, "/login").permitAll()
 				.antMatchers(HttpMethod.GET, "/categories").permitAll().antMatchers(ACESSO).permitAll().anyRequest()
 				.authenticated().and().addFilter(new JWTAuthenticateFilter(authenticationManager()))
