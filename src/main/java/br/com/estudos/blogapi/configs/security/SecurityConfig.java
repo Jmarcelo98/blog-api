@@ -26,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final String[] ACESSO = { "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
 			"/configuration/security", "/swagger-ui.html", "/webjars/**", "/h2/**" };
 
+	private final String[] ACESSO_CONTROLLERS = { "/users/**" };
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailImpl).passwordEncoder(passwordEncoder);
@@ -36,8 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().disable();
 		http.cors().configurationSource(RequestBody -> new CorsConfiguration().applyPermitDefaultValues());
 		http.csrf().disable().authorizeHttpRequests().antMatchers(HttpMethod.POST, "/login").permitAll()
-				.antMatchers(HttpMethod.GET, "/categories").permitAll().antMatchers(ACESSO).permitAll().anyRequest()
-				.authenticated().and().addFilter(new JWTAuthenticateFilter(authenticationManager()))
+				.antMatchers(ACESSO_CONTROLLERS).permitAll().antMatchers(HttpMethod.GET, "/categories")
+				.permitAll().antMatchers(ACESSO).permitAll().anyRequest().authenticated().and()
+				.addFilter(new JWTAuthenticateFilter(authenticationManager()))
 				.addFilter(new JWTValidateFilter(authenticationManager())).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}

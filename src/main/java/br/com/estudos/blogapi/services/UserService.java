@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.estudos.blogapi.handlers.BusinessException;
 import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
+import br.com.estudos.blogapi.mappers.UserMapper;
 import br.com.estudos.blogapi.model.dtos.UserDTO;
 import br.com.estudos.blogapi.model.dtos.input.UserRegistrationInputDTO;
 import br.com.estudos.blogapi.model.entities.User;
@@ -60,6 +61,14 @@ public class UserService {
 	public void delete(String nickname) {
 		userRepository.deleteByNickname(nickname);
 		log.info("Usuário deletado com sucesso");
+	}
+
+	public UserDTO findByNicknameAndConvertDTO(String nickname) {
+		var user = userRepository.findByNicknameIgnoreCase(nickname)
+				.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado através do apelido"));
+
+		return UserMapper.INSTANCE.entityToDTO(user);
+
 	}
 
 	public User findByNickname(String nickname) {
