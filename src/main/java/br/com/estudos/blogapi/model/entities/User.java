@@ -35,7 +35,7 @@ public class User implements Serializable {
 
 	private String name;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, updatable = false)
 	private String nickname;
 
 	@Column(nullable = false)
@@ -46,6 +46,7 @@ public class User implements Serializable {
 	@Lob
 	private byte[] profilePicture;
 
+	
 	private String biography;
 
 	private String urlLinkedin;
