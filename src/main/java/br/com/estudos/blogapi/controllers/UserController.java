@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.estudos.blogapi.configs.security.JWTUtils;
 import br.com.estudos.blogapi.model.dtos.UserDTO;
 import br.com.estudos.blogapi.model.dtos.input.UserRegistrationInputDTO;
+import br.com.estudos.blogapi.model.dtos.input.UserUpdateInputDTO;
 import br.com.estudos.blogapi.services.UserService;
 import lombok.AllArgsConstructor;
 
@@ -32,9 +33,14 @@ public class UserController {
 	}
 
 	@PatchMapping
-	public ResponseEntity<Void> update(@RequestBody UserDTO userDTO) {
-		userService.update(userDTO, jwtUtils.getPrincipal());
+	public ResponseEntity<Void> update(@RequestBody UserUpdateInputDTO userUpdateInputDTO) {
+		userService.update(userUpdateInputDTO, jwtUtils.getPrincipal());
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping
+	public ResponseEntity<UserDTO> findByNicknameUserLogged() {	
+		return ResponseEntity.ok(userService.findByNicknameAndConvertDTO(jwtUtils.getPrincipal()));
 	}
 
 	@GetMapping(path = "/{nickname}")

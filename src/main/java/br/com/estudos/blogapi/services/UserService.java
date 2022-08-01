@@ -13,6 +13,7 @@ import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
 import br.com.estudos.blogapi.mappers.UserMapper;
 import br.com.estudos.blogapi.model.dtos.UserDTO;
 import br.com.estudos.blogapi.model.dtos.input.UserRegistrationInputDTO;
+import br.com.estudos.blogapi.model.dtos.input.UserUpdateInputDTO;
 import br.com.estudos.blogapi.model.entities.User;
 import br.com.estudos.blogapi.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -45,11 +46,13 @@ public class UserService {
 	}
 
 	@Transactional
-	public void update(UserDTO userDTO, String nickname) {
+	public void update(UserUpdateInputDTO userUpdateInputDTO, String nickname) {
 
 		var userLogged = findByNickname(nickname);
 
-		BeanUtils.copyProperties(userDTO, userLogged);
+		BeanUtils.copyProperties(userUpdateInputDTO, userLogged);
+
+		userLogged.setUpdatedAt(LocalDate.now());
 
 		userRepository.save(userLogged);
 

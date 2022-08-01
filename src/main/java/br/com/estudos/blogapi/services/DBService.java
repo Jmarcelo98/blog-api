@@ -65,8 +65,13 @@ public class DBService {
 				.biography("Estagiário Dev").profilePicture(null).isPremium(false).password(encoder.encode("123"))
 				.urlInstagram("https:www.instagram.com/marcosgiovanny/")
 				.urlLinkedin("www.linkedin.com/in/marcos-giovanny/").urlWebSite(null).build();
+		
+		var user3 = User.builder().id(null).nickname("anonymousUser").name("Anonymus User").createdAt(now).updatedAt(null)
+				.biography("Hacker").profilePicture(null).isPremium(false).password(encoder.encode("123"))
+				.urlInstagram(null)
+				.urlLinkedin(null).urlWebSite("https://en.wikipedia.org/wiki/Anonymous_(hacker_group)").build();
 
-		userRepository.saveAll(Arrays.asList(user, user1, user2));
+		userRepository.saveAll(Arrays.asList(user, user1, user2, user3));
 
 		var category = Category.builder().id(null).description("Futebol").build();
 		var category1 = Category.builder().id(null).description("Música").build();
