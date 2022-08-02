@@ -2,6 +2,8 @@ package br.com.estudos.blogapi.model.dtos.input;
 
 import java.io.Serializable;
 
+import javax.persistence.Lob;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +21,8 @@ public class UserUpdateInputDTO implements Serializable {
 	private String urlInstagram;
 
 	private String urlWebSite;
+
+	@Lob
+	private byte[] profilePicture;
 
 }
