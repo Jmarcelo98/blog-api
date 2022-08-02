@@ -39,7 +39,7 @@ public class UserController {
 	}
 
 	@GetMapping
-	public ResponseEntity<UserDTO> findByNicknameUserLogged() {	
+	public ResponseEntity<UserDTO> findByNicknameUserLogged() {
 		return ResponseEntity.ok(userService.findByNicknameAndConvertDTO(jwtUtils.getPrincipal()));
 	}
 
