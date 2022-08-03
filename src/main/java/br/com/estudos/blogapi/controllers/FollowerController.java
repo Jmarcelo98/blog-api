@@ -37,14 +37,19 @@ public class FollowerController {
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping(value = "/all-followers/{nickname}")
+	@GetMapping(path = "/all-followers/{nickname}")
 	public ResponseEntity<List<UserOutputDTO>> findAllFollowers(@PathVariable("nickname") String nickname) {
 		return ResponseEntity.ok(followerService.findAllFollowers(nickname));
 	}
 
-	@GetMapping(value = "/all-following/{nickname}")
+	@GetMapping(path = "/all-following/{nickname}")
 	public ResponseEntity<List<UserOutputDTO>> findAllFollowing(@PathVariable("nickname") String nickname) {
 		return ResponseEntity.ok(followerService.findAllFollowing(nickname));
+	}
+
+	@GetMapping(path = "/isFollow/{nickname}")
+	public ResponseEntity<Boolean> isFollow(@PathVariable("nickname") String nickname) {
+		return ResponseEntity.ok(followerService.isFollow(nickname, jwtUtils.getPrincipal()));
 	}
 
 	@GetMapping(value = "/count-follower/{nickname}")

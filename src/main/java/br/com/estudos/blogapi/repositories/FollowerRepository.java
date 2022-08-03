@@ -9,9 +9,9 @@ import br.com.estudos.blogapi.model.entities.User;
 
 public interface FollowerRepository extends JpaRepository<Follower, Integer> {
 
-	List<Follower> findAllByFollow(User user);
+	List<Follower> findAllByFollowOrderByCreatedAtDesc(User user);
 
-	List<Follower> findAllByFollowed(User user);
+	List<Follower> findAllByFollowedOrderByCreatedAtDesc(User user);
 
 	Integer countByFollow(User user);
 

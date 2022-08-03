@@ -122,10 +122,13 @@ public class DBService {
 
 		likedRepository.saveAll(Arrays.asList(liked, liked1));
 
-		var follower = Follower.builder().id(null).follow(user).followed(user1).build();
-		var follower1 = Follower.builder().id(null).follow(user1).followed(user).build();
-		var follower2 = Follower.builder().id(null).follow(user2).followed(user1).build();
-		var follower3 = Follower.builder().id(null).follow(user2).followed(user).build();
+		var follower = Follower.builder().id(null).follow(user).followed(user1).createdAt(dateCreatedSena).build();
+		
+		var follower1 = Follower.builder().id(null).follow(user1).followed(user).createdAt(dateJaneiro).build();
+		
+		var follower2 = Follower.builder().id(null).follow(user2).followed(user1).createdAt(dateCreatedSena).build();
+		
+		var follower3 = Follower.builder().id(null).follow(user2).followed(user).createdAt(now).build();
 
 		followerRepository.saveAll(Arrays.asList(follower, follower1, follower2, follower3));
 

@@ -78,7 +78,7 @@ public class FollowerService {
 	public List<UserOutputDTO> findAllFollowers(String nickname) {
 
 		var user = findUserByNickname(nickname);
-		var followers = followerRepository.findAllByFollowed(user);
+		var followers = followerRepository.findAllByFollowedOrderByCreatedAtDesc(user);
 		var listFollowers = FollowersOutputMapper.INSTANCE.listaEntityToListaDTO(followers);
 
 		return listFollowers.stream()
@@ -89,13 +89,26 @@ public class FollowerService {
 
 	public List<UserOutputDTO> findAllFollowing(String nickname) {
 		var user = findUserByNickname(nickname);
-		var following = followerRepository.findAllByFollow(user);
+		var following = followerRepository.findAllByFollowOrderByCreatedAtDesc(user);
 
 		var listFollowing = FollowingOutputMapper.INSTANCE.listaEntityToListaDTO(following);
 
 		return listFollowing.stream()
 				.map(obj -> new UserOutputDTO(obj.getFollowed().getNickname(), obj.getFollowed().getProfilePicture()))
 				.collect(Collectors.toList());
+	}
+
+	public Boolean isFollow(String nickname, String nicknameLogged) {
+
+		if (isSameUser(nickname, nicknameLogged)) {
+			throw new BusinessException("Você não segue a você mesmo");
+		}
+
+		var userLogged = findUserByNickname(nicknameLogged);
+
+		var userToFollow = findUserByNickname(nickname);
+
+		return followerRepository.existsByFollowAndFollowed(userLogged, userToFollow);
 	}
 
 	public Map<String, Integer> countFollower(String nickname) {
@@ -121,7 +134,7 @@ public class FollowerService {
 
 	private boolean isSameUser(String nickname, String logado) {
 
-		if (nickname == logado) {
+		if (nickname.equals(logado)) {
 			return true;
 		}
 
