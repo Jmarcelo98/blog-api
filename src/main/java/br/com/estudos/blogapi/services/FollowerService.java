@@ -3,6 +3,7 @@ package br.com.estudos.blogapi.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.estudos.blogapi.handlers.BusinessException;
 import br.com.estudos.blogapi.mappers.output.FollowersOutputMapper;
 import br.com.estudos.blogapi.mappers.output.FollowingOutputMapper;
-import br.com.estudos.blogapi.model.dtos.output.FollowersOutputDTO;
-import br.com.estudos.blogapi.model.dtos.output.FollowingOutputDTO;
+import br.com.estudos.blogapi.model.dtos.output.UserOutputDTO;
 import br.com.estudos.blogapi.model.entities.Follower;
 import br.com.estudos.blogapi.model.entities.User;
 import br.com.estudos.blogapi.repositories.FollowerRepository;
@@ -75,18 +75,27 @@ public class FollowerService {
 
 	}
 
-	public List<FollowersOutputDTO> findAllFollowers(String nickname) {
+	public List<UserOutputDTO> findAllFollowers(String nickname) {
 
 		var user = findUserByNickname(nickname);
 		var followers = followerRepository.findAllByFollowed(user);
-		return FollowersOutputMapper.INSTANCE.listaEntityToListaDTO(followers);
+		var listFollowers = FollowersOutputMapper.INSTANCE.listaEntityToListaDTO(followers);
+
+		return listFollowers.stream()
+				.map(obj -> new UserOutputDTO(obj.getFollow().getNickname(), obj.getFollow().getProfilePicture()))
+				.collect(Collectors.toList());
 
 	}
 
-	public List<FollowingOutputDTO> findAllFollowing(String nickname) {
+	public List<UserOutputDTO> findAllFollowing(String nickname) {
 		var user = findUserByNickname(nickname);
 		var following = followerRepository.findAllByFollow(user);
-		return FollowingOutputMapper.INSTANCE.listaEntityToListaDTO(following);
+
+		var listFollowing = FollowingOutputMapper.INSTANCE.listaEntityToListaDTO(following);
+
+		return listFollowing.stream()
+				.map(obj -> new UserOutputDTO(obj.getFollowed().getNickname(), obj.getFollowed().getProfilePicture()))
+				.collect(Collectors.toList());
 	}
 
 	public Map<String, Integer> countFollower(String nickname) {
