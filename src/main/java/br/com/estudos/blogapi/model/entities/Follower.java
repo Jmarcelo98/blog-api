@@ -1,7 +1,9 @@
 package br.com.estudos.blogapi.model.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,5 +35,8 @@ public class Follower implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_user_followed")
 	private User followed;
+	
+	@Column(nullable = false)
+	private LocalDate createdAt;
 
 }
