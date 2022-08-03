@@ -1,5 +1,6 @@
 package br.com.estudos.blogapi.services;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,9 @@ public class FollowerService {
 			throw new BusinessException("Você já segue este usuário");
 		}
 
-		var follow = Follower.builder().id(null).follow(userLogged).followed(userToFollow).build();
+		var follow = Follower.builder().id(null).follow(userLogged).followed(userToFollow).createdAt(LocalDate.now())
+				.build();
+		
 		followerRepository.save(follow);
 
 		log.info("Usuário seguido com sucesso");
