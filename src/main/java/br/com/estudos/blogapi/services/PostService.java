@@ -68,6 +68,11 @@ public class PostService {
 		postRepository.deleteById(idPost);
 		log.info("Post deletado com sucesso");
 	}
+	
+	public Integer countPostsCreated(String nickname) {
+		var user = findUserByNickname(nickname);
+		return postRepository.countByUser(user);
+	}
 
 	public List<PostDTO> findAllByUser(String nickname, Integer page, Integer itensPerPage) {
 

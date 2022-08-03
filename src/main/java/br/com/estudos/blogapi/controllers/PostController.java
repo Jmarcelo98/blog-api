@@ -45,6 +45,11 @@ public class PostController {
 		return ResponseEntity.ok().build();
 	}
 
+	@GetMapping(path = "/count/{nickname}")
+	public ResponseEntity<Integer> countPostsCreated(@PathVariable("nickname") String nickname) {
+		return ResponseEntity.ok(postService.countPostsCreated(nickname));
+	}
+
 	@GetMapping(path = "/{nickname}")
 	public ResponseEntity<List<PostDTO>> findAllByUser(@PathVariable("nickname") String nickname,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,

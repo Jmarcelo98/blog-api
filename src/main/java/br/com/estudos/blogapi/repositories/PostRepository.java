@@ -17,4 +17,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 			+ "(SELECT * FROM POST p WHERE p.id = ?1 and p.id_user = ?2) then 'TRUE' else 'FALSE' end FROM post", nativeQuery = true)
 	Boolean itYourPost(Integer idPost, Integer idLogado);
 
+	Integer countByUser(User user);
+	
 }
