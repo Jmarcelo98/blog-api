@@ -53,7 +53,8 @@ public class DBService {
 		var user = User.builder().id(null).nickname("joao").name("João Marcelo").createdAt(dateCreatedJoao)
 				.updatedAt(null).biography("Dev Full Stack Java").profilePicture(null).isPremium(false)
 				.password(encoder.encode("123")).urlInstagram("https:www.instagram.com/jmarcelo098/")
-				.urlLinkedin("www.linkedin.com/in/jmarcelo98/").urlWebSite("https:jmarcelo98.github.io/portfolio/")
+				.urlLinkedin("https://www.linkedin.com/in/jmarcelo98/")
+				.urlWebSite("https:jmarcelo98.github.io/portfolio/")
 				.build();
 
 		var user1 = User.builder().id(null).nickname("senavs").name("Matheus Sena").createdAt(dateCreatedSena)
@@ -61,7 +62,7 @@ public class DBService {
 				.password(encoder.encode("123")).urlInstagram("https:www.instagram.com/senavs/")
 				.urlLinkedin("www.linkedin.com/in/senavs/").urlWebSite("senavs.com").build();
 
-		var user2 = User.builder().id(null).nickname(".Marcos").name("Marcos Giovanny").createdAt(now).updatedAt(null)
+		var user2 = User.builder().id(null).nickname("marcos").name("Marcos Giovanny").createdAt(now).updatedAt(null)
 				.biography("Estagiário Dev").profilePicture(null).isPremium(false).password(encoder.encode("123"))
 				.urlInstagram("https:www.instagram.com/marcosgiovanny/")
 				.urlLinkedin("www.linkedin.com/in/marcos-giovanny/").urlWebSite(null).build();
