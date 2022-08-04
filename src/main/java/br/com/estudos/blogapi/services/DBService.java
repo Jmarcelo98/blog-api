@@ -52,8 +52,7 @@ public class DBService {
 
 		var user = User.builder().id(null).nickname("joao").name("João Marcelo").createdAt(dateCreatedJoao)
 				.updatedAt(null)
-				.biography(
-						"Lorem ipsum dolor sit amet, consectetur "
+				.biography("Lorem ipsum dolor sit amet, consectetur "
 						+ "adipiscing elit. Aenean accumsan elit vitae massa porta bibendum. Pellentesque rutrum posuere lectus vel dapibus. Mauris luctus hendrerit sem eu tristique. Sed lacinia bibendum ornare. Phasellus ac ligula.")
 				.profilePicture(null).isPremium(false).password(encoder.encode("123"))
 				.urlInstagram("www.instagram.com/jmarcelo098/").urlLinkedin("www.linkedin.com/in/jmarcelo98/")
@@ -106,7 +105,14 @@ public class DBService {
 				.content("A Furia finalmente saiu do TOP 8 das competições para se sagrar CAMPEÃ MUNDIAL DE CSGOS")
 				.build();
 
-		postRepository.saveAll(Arrays.asList(post, post2, post3));
+		var post4 = Post.builder().id(null).createdAt(dateJaneiro).updatedAt(null).thumbnail(null)
+				.description("Lorem ipsum dolor vel. Lorem ipsum dolor vel Lorem ipsum dolor vel").category(category3).title("Eget").isPublished(true)
+				.publishedAt(now).user(user)
+				.content(
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum scelerisque, nisi et faucibus mollis, magna magna bibendum libero morbi.")
+				.build();
+
+		postRepository.saveAll(Arrays.asList(post, post2, post3, post4));
 
 		var comment = Comment.builder().id(null).createdAt(dateFevereiro).post(post).user(user1)
 				.comment("Muito bom o POST! A SAF é muito importante para o clubes brasileiros").build();

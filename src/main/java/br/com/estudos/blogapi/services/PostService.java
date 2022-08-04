@@ -80,7 +80,7 @@ public class PostService {
 
 		PageRequest pageRequest = PageRequest.of(page, itensPerPage);
 
-		var listPost = postRepository.findAllByUserAndIsPublishedTrueOrderByCreatedAt(user, pageRequest);
+		var listPost = postRepository.findAllByUserAndIsPublishedTrueOrderByPublishedAtDesc(user, pageRequest);
 
 		return PostMapper.INSTANCE.listaEntityToListaDTO(listPost);
 
