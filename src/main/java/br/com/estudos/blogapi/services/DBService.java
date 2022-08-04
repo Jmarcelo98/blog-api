@@ -51,9 +51,13 @@ public class DBService {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		var user = User.builder().id(null).nickname("joao").name("João Marcelo").createdAt(dateCreatedJoao)
-				.updatedAt(null).biography("Dev Full Stack Java").profilePicture(null).isPremium(false)
-				.password(encoder.encode("123")).urlInstagram("www.instagram.com/jmarcelo098/")
-				.urlLinkedin("www.linkedin.com/in/jmarcelo98/").urlWebSite("jmarcelo98.github.io/portfolio/").build();
+				.updatedAt(null)
+				.biography(
+						"Lorem ipsum dolor sit amet, consectetur "
+						+ "adipiscing elit. Aenean accumsan elit vitae massa porta bibendum. Pellentesque rutrum posuere lectus vel dapibus. Mauris luctus hendrerit sem eu tristique. Sed lacinia bibendum ornare. Phasellus ac ligula.")
+				.profilePicture(null).isPremium(false).password(encoder.encode("123"))
+				.urlInstagram("www.instagram.com/jmarcelo098/").urlLinkedin("www.linkedin.com/in/jmarcelo98/")
+				.urlWebSite("jmarcelo98.github.io/portfolio/").build();
 
 		var user1 = User.builder().id(null).nickname("senavs").name("Matheus Sena").createdAt(dateCreatedSena)
 				.updatedAt(null).biography("Engenheiro de Software").profilePicture(null).isPremium(false)
@@ -126,7 +130,9 @@ public class DBService {
 
 		var follower3 = Follower.builder().id(null).follow(user2).followed(user).createdAt(now).build();
 
-		followerRepository.saveAll(Arrays.asList(follower, follower1, follower2, follower3));
+//		followerRepository.saveAll(Arrays.asList(follower, follower1, follower2, follower3));
+
+		followerRepository.saveAll(Arrays.asList(follower, follower2, follower3));
 
 	}
 
