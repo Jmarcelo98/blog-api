@@ -52,27 +52,22 @@ public class DBService {
 
 		var user = User.builder().id(null).nickname("joao").name("João Marcelo").createdAt(dateCreatedJoao)
 				.updatedAt(null).biography("Dev Full Stack Java").profilePicture(null).isPremium(false)
-				.password(encoder.encode("123")).urlInstagram("https:www.instagram.com/jmarcelo098/")
-				.urlLinkedin("https://www.linkedin.com/in/jmarcelo98/")
-				.urlWebSite("https:jmarcelo98.github.io/portfolio/")
-				.build();
+				.password(encoder.encode("123")).urlInstagram("www.instagram.com/jmarcelo098/")
+				.urlLinkedin("www.linkedin.com/in/jmarcelo98/").urlWebSite("jmarcelo98.github.io/portfolio/").build();
 
 		var user1 = User.builder().id(null).nickname("senavs").name("Matheus Sena").createdAt(dateCreatedSena)
 				.updatedAt(null).biography("Engenheiro de Software").profilePicture(null).isPremium(false)
-				.password(encoder.encode("123")).urlInstagram("https:www.instagram.com/senavs/")
+				.password(encoder.encode("123")).urlInstagram("www.instagram.com/senavs/")
 				.urlLinkedin("www.linkedin.com/in/senavs/").urlWebSite("senavs.com").build();
 
 		var user2 = User.builder().id(null).nickname("marcos").name("Marcos Giovanny").createdAt(now).updatedAt(null)
-				.biography("Estagiário Dev").profilePicture(null).isPremium(false).password(encoder.encode("123"))
-				.urlInstagram("https:www.instagram.com/marcosgiovanny/")
-				.urlLinkedin("www.linkedin.com/in/marcos-giovanny/").urlWebSite(null).build();
-		
-		var user3 = User.builder().id(null).nickname("anonymousUser").name("Anonymus User").createdAt(now).updatedAt(null)
-				.biography("Hacker").profilePicture(null).isPremium(false).password(encoder.encode("123"))
-				.urlInstagram(null)
-				.urlLinkedin(null).urlWebSite("https://en.wikipedia.org/wiki/Anonymous_(hacker_group)").build();
+				.biography(
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elementum justo id felis rhoncus tristique. Nulla commodo enim id eros faucibus, et euismod lacus suscipit. Phasellus viverra, purus efficitur varius dictum, leo orci bibendum ex.")
+				.profilePicture(null).isPremium(false).password(encoder.encode("123"))
+				.urlInstagram("www.instagram.com/marcosgiovanny/").urlLinkedin("www.linkedin.com/in/marcos-giovanny/")
+				.urlWebSite(null).build();
 
-		userRepository.saveAll(Arrays.asList(user, user1, user2, user3));
+		userRepository.saveAll(Arrays.asList(user, user1, user2));
 
 		var category = Category.builder().id(null).description("Futebol").build();
 		var category1 = Category.builder().id(null).description("Música").build();
@@ -124,11 +119,11 @@ public class DBService {
 		likedRepository.saveAll(Arrays.asList(liked, liked1));
 
 		var follower = Follower.builder().id(null).follow(user).followed(user1).createdAt(dateCreatedSena).build();
-		
+
 		var follower1 = Follower.builder().id(null).follow(user1).followed(user).createdAt(dateJaneiro).build();
-		
+
 		var follower2 = Follower.builder().id(null).follow(user2).followed(user1).createdAt(dateCreatedSena).build();
-		
+
 		var follower3 = Follower.builder().id(null).follow(user2).followed(user).createdAt(now).build();
 
 		followerRepository.saveAll(Arrays.asList(follower, follower1, follower2, follower3));
