@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import br.com.estudos.blogapi.handlers.ForbiddenException;
+import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
 import br.com.estudos.blogapi.mappers.PostMapper;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
 import br.com.estudos.blogapi.model.entities.User;
@@ -68,7 +69,12 @@ public class PostService {
 		postRepository.deleteById(idPost);
 		log.info("Post deletado com sucesso");
 	}
-	
+
+	public PostDTO findById(Integer id) {
+		var postById = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post não encontrado"));
+		return PostMapper.INSTANCE.entityToDTO(postById);
+	}
+
 	public Integer countPostsCreated(String nickname) {
 		var user = findUserByNickname(nickname);
 		return postRepository.countByUser(user);

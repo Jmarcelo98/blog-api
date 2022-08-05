@@ -106,13 +106,27 @@ public class DBService {
 				.build();
 
 		var post4 = Post.builder().id(null).createdAt(dateJaneiro).updatedAt(null).thumbnail(null)
-				.description("Lorem ipsum dolor vel. Lorem ipsum dolor vel Lorem ipsum dolor vel").category(category3).title("Eget").isPublished(true)
-				.publishedAt(now).user(user)
+				.description("Lorem ipsum dolor vel. Lorem ipsum dolor vel Lorem ipsum dolor vel").category(category3)
+				.title("Eget").isPublished(true).publishedAt(now).user(user)
 				.content(
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum scelerisque, nisi et faucibus mollis, magna magna bibendum libero morbi.")
 				.build();
 
-		postRepository.saveAll(Arrays.asList(post, post2, post3, post4));
+		var post5 = Post.builder().id(null).createdAt(LocalDate.of(2022, 04, 10)).updatedAt(null).thumbnail(null)
+				.description("Segue o líder").category(category).title("Cruzeiro").isPublished(true)
+				.publishedAt(LocalDate.of(2022, 04, 10)).user(user)
+				.content(
+						"O texto aleatório sobre o que disse Ronaldo referente ao Cruzeiro: O meu passado com o Cruzeiro, a minha história com o Cruzeiro, saí bem pequeno do clube, que abriu as portas do mundo para mim. E eu, com a possibilidade de fazer uma recuperação do Cruzeiro, vi um potencial gigantesco, como vi o tamanho da dívida que era gigantesco. Mas eu sabia que o potencial era muito maior que a dívida\", disse Ronaldo.\n"
+								+ "\n"
+								+ "Ronaldo pagará R$ 400 milhões - investimento do próprio bolso do empresário ou por incremento de receitas com venda de jogadores e cotas de premiação e patrocínios - para ficar com 90% das ações da SAF. A associação Cruzeiro é dona dos outros 10%.")
+				.build();
+
+		var post6 = Post.builder().id(null).createdAt(LocalDate.of(2022, 7, 20)).updatedAt(null).thumbnail(null)
+				.description("O mesmo do FIFA 21").category(category2).title("FIFA 22").isPublished(true)
+				.publishedAt(LocalDate.of(2022, 7, 20)).user(user)
+				.content("O FIFA 22 é simplesmente um patch do FIFA 21, o modo carreira é todo bugado!").build();
+
+		postRepository.saveAll(Arrays.asList(post, post2, post3, post4, post5, post6));
 
 		var comment = Comment.builder().id(null).createdAt(dateFevereiro).post(post).user(user1)
 				.comment("Muito bom o POST! A SAF é muito importante para o clubes brasileiros").build();

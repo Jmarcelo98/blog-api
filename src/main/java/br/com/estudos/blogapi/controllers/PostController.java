@@ -45,16 +45,21 @@ public class PostController {
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping(path = "/count/{nickname}")
-	public ResponseEntity<Integer> countPostsCreated(@PathVariable("nickname") String nickname) {
-		return ResponseEntity.ok(postService.countPostsCreated(nickname));
+	@GetMapping(path = "/{id}")
+	public ResponseEntity<PostDTO> findById(@PathVariable("id") Integer id) {
+		return ResponseEntity.ok(postService.findById(id));
 	}
 
-	@GetMapping(path = "/{nickname}")
+	@GetMapping(path = "/all/{nickname}")
 	public ResponseEntity<List<PostDTO>> findAllByUser(@PathVariable("nickname") String nickname,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "itensPerPage", defaultValue = "10") Integer itensPerPage) {
 		return ResponseEntity.ok(postService.findAllByUser(nickname, page, itensPerPage));
+	}
+
+	@GetMapping(path = "/count/{nickname}")
+	public ResponseEntity<Integer> countPostsCreated(@PathVariable("nickname") String nickname) {
+		return ResponseEntity.ok(postService.countPostsCreated(nickname));
 	}
 
 }
