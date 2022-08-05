@@ -71,7 +71,8 @@ public class PostService {
 	}
 
 	public PostDTO findById(Integer id) {
-		var postById = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post não encontrado"));
+		var postById = postRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Post não encontrado"));
 		return PostMapper.INSTANCE.entityToDTO(postById);
 	}
 

@@ -2,6 +2,7 @@ package br.com.estudos.blogapi.model.dtos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Lob;
 
@@ -35,5 +36,7 @@ public class PostDTO implements Serializable {
 	private LocalDate updatedAt;
 
 	private CategoryDTO category;
+	
+	private List<CommentDTO> comments;
 
 }
