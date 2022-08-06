@@ -78,7 +78,7 @@ public class PostService {
 
 	public Integer countPostsCreated(String nickname) {
 		var user = findUserByNickname(nickname);
-		return postRepository.countByUser(user);
+		return postRepository.countByUserAndIsPublishedTrue(user);
 	}
 
 	public List<PostDTO> findAllByUser(String nickname, Integer page, Integer itensPerPage) {
