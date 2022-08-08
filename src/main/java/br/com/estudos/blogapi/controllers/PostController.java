@@ -46,8 +46,8 @@ public class PostController {
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<PostDTO> findById(@PathVariable("id") Integer id) {
-		return ResponseEntity.ok(postService.findById(id));
+	public ResponseEntity<PostDTO> findByIdPostDTO(@PathVariable("id") Integer id) {
+		return ResponseEntity.ok(postService.findByIdPostDTO(id));
 	}
 
 	@GetMapping(path = "/all/{nickname}")
