@@ -45,7 +45,7 @@ public class UserController {
 
 	@GetMapping(path = "/{nickname}")
 	public ResponseEntity<UserDTO> findByNickname(@PathVariable("nickname") String nickname) {
-		System.err.println(nickname);
+		System.err.println("nickname: " + nickname);
 		return ResponseEntity.ok(userService.findByNicknameAndConvertDTO(nickname));
 	}
 

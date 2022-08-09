@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.estudos.blogapi.configs.security.JWTUtils;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
+import br.com.estudos.blogapi.model.dtos.input.PostInputDTO;
 import br.com.estudos.blogapi.services.PostService;
 import lombok.AllArgsConstructor;
 
@@ -28,9 +29,8 @@ public class PostController {
 	private final JWTUtils jwtUtils;
 
 	@PostMapping
-	public ResponseEntity<Void> create(@RequestBody PostDTO postDTO) {
-		postService.create(postDTO, jwtUtils.getPrincipal());
-		return ResponseEntity.ok().build();
+	public ResponseEntity<Integer> create(@RequestBody PostInputDTO postInputDTO) {
+		return ResponseEntity.ok(postService.create(postInputDTO, jwtUtils.getPrincipal()));
 	}
 
 	@PatchMapping

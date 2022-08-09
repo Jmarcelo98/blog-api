@@ -1,5 +1,6 @@
 package br.com.estudos.blogapi.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -12,6 +13,7 @@ import br.com.estudos.blogapi.handlers.ForbiddenException;
 import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
 import br.com.estudos.blogapi.mappers.PostMapper;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
+import br.com.estudos.blogapi.model.dtos.input.PostInputDTO;
 import br.com.estudos.blogapi.model.entities.Post;
 import br.com.estudos.blogapi.model.entities.User;
 import br.com.estudos.blogapi.repositories.PostRepository;
@@ -27,15 +29,26 @@ public class PostService {
 
 	private final UserService userService;
 
+	private final CategoryService categoryService;
+
 	@Transactional
-	public void create(PostDTO postDTO, String logged) {
+	public Integer create(PostInputDTO postInputDTO, String logged) {
 
 		var userLogged = userService.findByNickname(logged);
-		var post = PostMapper.INSTANCE.DTOToEntity(postDTO);
-		post.setUser(userLogged);
+
+		var category = categoryService.findById(postInputDTO.getCategory().getId());
+
+		var post = Post.builder().id(null).createdAt(LocalDate.now()).updatedAt(null)
+				.thumbnail(postInputDTO.getThumbnail()).description(postInputDTO.getDescription()).category(category)
+				.title(postInputDTO.getTitle()).isPublished(postInputDTO.getIsPublished())
+				.publishedAt(publishNow(postInputDTO.getIsPublished())).user(userLogged)
+				.content(postInputDTO.getContent()).build();
+
 		postRepository.save(post);
 
 		log.info("Post cadastrado com sucesso");
+
+		return post.getId();
 
 	}
 
@@ -106,6 +119,13 @@ public class PostService {
 
 	private User findUserByNickname(String nickname) {
 		return userService.findByNickname(nickname);
+	}
+
+	private LocalDate publishNow(Boolean isPublished) {
+		if (isPublished) {
+			return LocalDate.now();
+		}
+		return null;
 	}
 
 }
