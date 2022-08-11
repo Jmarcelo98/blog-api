@@ -28,7 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final String[] ACESSO = { "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
 			"/configuration/security", "/swagger-ui.html", "/webjars/**", "/h2/**" };
 
-	private final String[] ACESSO_PUBLIC_CONTROLLERS = { "/categories" };
+	private final String[] ACESSO_PUBLIC_CONTROLLERS = { "/categories", "/posts/most-recent",
+			"/follower/most-followers" };
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -57,25 +58,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-    public CorsFilter corsFilter() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        final CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin(CorsConfiguration.ALL);
-        config.addAllowedHeader("*");
-        config.addAllowedOriginPattern("*");
-        config.setAllowedOrigins(Collections.singletonList("*"));
-        config.addExposedHeader("Authorization");
-        config.addAllowedMethod("OPTIONS");
-        config.addAllowedMethod("HEAD");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("DELETE");
-        config.addAllowedMethod("PATCH");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
-	
+	public CorsFilter corsFilter() {
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		final CorsConfiguration config = new CorsConfiguration();
+		config.addAllowedOrigin(CorsConfiguration.ALL);
+		config.addAllowedHeader("*");
+		config.addAllowedOriginPattern("*");
+		config.setAllowedOrigins(Collections.singletonList("*"));
+		config.addExposedHeader("Authorization");
+		config.addAllowedMethod("OPTIONS");
+		config.addAllowedMethod("HEAD");
+		config.addAllowedMethod("GET");
+		config.addAllowedMethod("PUT");
+		config.addAllowedMethod("POST");
+		config.addAllowedMethod("DELETE");
+		config.addAllowedMethod("PATCH");
+		source.registerCorsConfiguration("/**", config);
+		return new CorsFilter(source);
+	}
+
 //	@Bean
 //    CorsConfigurationSource corsConfigurationSource() {
 //        CorsConfiguration configuration = new CorsConfiguration();
@@ -85,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        source.registerCorsConfiguration("/**", configuration);
 //        return source;
 //    }
-	
+
 //
 //	@Bean
 //	CorsConfigurationSource corsConfigurationSource() {
