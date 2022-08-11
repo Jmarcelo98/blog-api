@@ -18,5 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 	Boolean itYourPost(Integer idPost, Integer idLogado);
 
 	Integer countByUserAndIsPublishedTrue(User user);
+	
+	List<Post> findAllByIsPublishedTrueOrderByPublishedAtDesc(Pageable pageRequest);
 
 }

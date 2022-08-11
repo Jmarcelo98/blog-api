@@ -84,6 +84,18 @@ public class PostService {
 		log.info("Post deletado com sucesso");
 	}
 
+	public List<PostDTO> getMostRecentPost() {
+
+		PageRequest pageRequest = PageRequest.of(0, 4);
+
+		var list = postRepository.findAllByIsPublishedTrueOrderByPublishedAtDesc(pageRequest);
+
+		System.err.println(list.size());
+
+		return PostMapper.INSTANCE.listaEntityToListaDTO(list);
+
+	}
+
 	public Post findById(Integer id) {
 		return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post não encontrado"));
 	}

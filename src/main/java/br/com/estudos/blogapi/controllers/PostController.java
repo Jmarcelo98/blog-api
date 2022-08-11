@@ -45,6 +45,11 @@ public class PostController {
 		return ResponseEntity.ok().build();
 	}
 
+	@GetMapping(path = "/most-recent")
+	public ResponseEntity<List<PostDTO>> getMostRecentPost() {
+		return ResponseEntity.ok(postService.getMostRecentPost());
+	}
+
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<PostDTO> findByIdPostDTO(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(postService.findByIdPostDTO(id));
