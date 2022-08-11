@@ -1,6 +1,7 @@
 package br.com.estudos.blogapi.services;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import br.com.estudos.blogapi.handlers.BusinessException;
 import br.com.estudos.blogapi.mappers.output.FollowersOutputMapper;
 import br.com.estudos.blogapi.mappers.output.FollowingOutputMapper;
+import br.com.estudos.blogapi.mappers.output.UserOutputMapper;
 import br.com.estudos.blogapi.model.dtos.output.UserOutputDTO;
 import br.com.estudos.blogapi.model.entities.Follower;
 import br.com.estudos.blogapi.model.entities.User;
@@ -47,7 +49,7 @@ public class FollowerService {
 
 		var follow = Follower.builder().id(null).follow(userLogged).followed(userToFollow).createdAt(LocalDate.now())
 				.build();
-		
+
 		followerRepository.save(follow);
 
 		log.info("Usuário seguido com sucesso");
@@ -75,6 +77,26 @@ public class FollowerService {
 		followerRepository.deleteById(unfollow.getId());
 
 		log.info("Usuário desseguido com sucesso");
+
+	}
+
+	public List<UserOutputDTO> getMostFollowers() {
+
+		var listMost = followerRepository.getMostFollowers();
+
+		List<UserOutputDTO> listUserOutput = new ArrayList<>();
+
+		for (int i = 0; i < listMost.size(); i++) {
+			listUserOutput.add(getUserOutputDTOFromIdUser(listMost.get(i)));
+		}
+
+		return listUserOutput;
+
+	}
+
+	private UserOutputDTO getUserOutputDTOFromIdUser(Integer idUser) {
+		var user = userService.findById(idUser);
+		return UserOutputMapper.INSTANCE.entityToDTO(user);
 
 	}
 

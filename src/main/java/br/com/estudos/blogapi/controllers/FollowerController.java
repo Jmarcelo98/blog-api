@@ -38,6 +38,11 @@ public class FollowerController {
 		return ResponseEntity.ok().build();
 	}
 
+	@GetMapping(path = "/most-followers")
+	public ResponseEntity<List<UserOutputDTO>> getMostFollowers() {
+		return ResponseEntity.ok(followerService.getMostFollowers());
+	}
+
 	@GetMapping(path = "/all-followers/{nickname}")
 	public ResponseEntity<List<UserOutputDTO>> findAllFollowers(@PathVariable("nickname") String nickname) {
 		return ResponseEntity.ok(followerService.findAllFollowers(nickname));
