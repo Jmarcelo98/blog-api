@@ -78,6 +78,11 @@ public class UserService {
 		return userRepository.findByNicknameIgnoreCase(nickname)
 				.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado através do apelido"));
 	}
+	
+	public User findById(Integer id) {
+		return userRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado através do ID"));
+	}
 
 	private Boolean existsByNickname(String nickname) {
 		return userRepository.existsByNicknameIgnoreCase(nickname);

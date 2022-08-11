@@ -38,14 +38,8 @@ public class UserController {
 		return ResponseEntity.ok().build();
 	}
 
-//	@GetMapping
-//	public ResponseEntity<UserDTO> findByNicknameUserLogged() {
-//		return ResponseEntity.ok(userService.findByNicknameAndConvertDTO(jwtUtils.getPrincipal()));
-//	}
-
 	@GetMapping(path = "/{nickname}")
 	public ResponseEntity<UserDTO> findByNickname(@PathVariable("nickname") String nickname) {
-		System.err.println("nickname: " + nickname);
 		return ResponseEntity.ok(userService.findByNicknameAndConvertDTO(nickname));
 	}
 

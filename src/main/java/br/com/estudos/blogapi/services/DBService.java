@@ -69,8 +69,15 @@ public class DBService {
 				.profilePicture(null).isPremium(false).password(encoder.encode("123"))
 				.urlInstagram("www.instagram.com/marcosgiovanny/").urlLinkedin("www.linkedin.com/in/marcos-giovanny/")
 				.urlWebSite(null).build();
+		
+		var user3 = User.builder().id(null).nickname("teste").name("Teste testado").createdAt(now).updatedAt(null)
+				.biography(
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elementum justo id felis rhoncus tristique. Nulla commodo enim id eros faucibus, et euismod lacus suscipit. Phasellus viverra, purus efficitur varius dictum, leo orci bibendum ex.")
+				.profilePicture(null).isPremium(false).password(encoder.encode("123"))
+				.urlInstagram(null).urlLinkedin(null)
+				.urlWebSite(null).build();
 
-		userRepository.saveAll(Arrays.asList(user, user1, user2));
+		userRepository.saveAll(Arrays.asList(user, user1, user2, user3));
 
 		var category = Category.builder().id(null).description("Futebol").build();
 		var category1 = Category.builder().id(null).description("Música").build();
@@ -149,10 +156,12 @@ public class DBService {
 		var follower2 = Follower.builder().id(null).follow(user2).followed(user1).createdAt(dateCreatedSena).build();
 
 		var follower3 = Follower.builder().id(null).follow(user2).followed(user).createdAt(now).build();
+		
+		var follower4 = Follower.builder().id(null).follow(user3).followed(user).createdAt(now).build();
 
 //		followerRepository.saveAll(Arrays.asList(follower, follower1, follower2, follower3));
 
-		followerRepository.saveAll(Arrays.asList(follower, follower2, follower3));
+		followerRepository.saveAll(Arrays.asList(follower, follower1, follower2, follower3, follower4));
 
 	}
 
