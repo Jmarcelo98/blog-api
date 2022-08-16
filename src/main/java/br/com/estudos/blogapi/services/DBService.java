@@ -113,7 +113,7 @@ public class DBService {
 
 		var post4 = Post.builder().id(null).createdAt(dateJaneiro).updatedAt(null).thumbnail(null)
 				.description("Lorem ipsum dolor vel. orem ipsum dolor Lorem ipsum dolor vel Lorem ipsum dolor vel")
-				.category(category3).title("Eget Lorem ip vel").isPublished(true).publishedAt(now).user(user)
+				.category(category3).title("Eget Lorem ip vel").isPublished(true).publishedAt(now).user(user2)
 				.content(
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum scelerisque, nisi et faucibus mollis, magna magna bibendum libero morbi.")
 				.build();

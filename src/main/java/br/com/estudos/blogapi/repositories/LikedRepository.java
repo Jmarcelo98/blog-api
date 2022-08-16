@@ -11,5 +11,7 @@ public interface LikedRepository extends JpaRepository<Liked, Integer> {
 	Integer countByPost(Post post);
 
 	Boolean existsByPostAndUser(Post post, User user);
+	
+	void deleteByPostAndUser(Post post, User user);
 
 }
