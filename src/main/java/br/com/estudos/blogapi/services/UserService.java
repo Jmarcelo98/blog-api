@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.estudos.blogapi.configs.security.JWTUtils;
 import br.com.estudos.blogapi.handlers.BusinessException;
 import br.com.estudos.blogapi.handlers.ResourceNotFoundException;
 import br.com.estudos.blogapi.mappers.UserMapper;
@@ -23,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AllArgsConstructor
 public class UserService {
+
+	private final JWTUtils jwtUtils;
 
 	private final UserRepository userRepository;
 
@@ -74,11 +77,16 @@ public class UserService {
 
 	}
 
+	public User getUserLogged() {
+		return userRepository.findByNicknameIgnoreCase(jwtUtils.getPrincipal())
+				.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado através do apelido"));
+	}
+
 	public User findByNickname(String nickname) {
 		return userRepository.findByNicknameIgnoreCase(nickname)
 				.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado através do apelido"));
 	}
-	
+
 	public User findById(Integer id) {
 		return userRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado através do ID"));

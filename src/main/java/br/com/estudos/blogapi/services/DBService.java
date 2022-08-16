@@ -69,13 +69,12 @@ public class DBService {
 				.profilePicture(null).isPremium(false).password(encoder.encode("123"))
 				.urlInstagram("www.instagram.com/marcosgiovanny/").urlLinkedin("www.linkedin.com/in/marcos-giovanny/")
 				.urlWebSite(null).build();
-		
+
 		var user3 = User.builder().id(null).nickname("teste").name("Teste testado").createdAt(now).updatedAt(null)
 				.biography(
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elementum justo id felis rhoncus tristique. Nulla commodo enim id eros faucibus, et euismod lacus suscipit. Phasellus viverra, purus efficitur varius dictum, leo orci bibendum ex.")
-				.profilePicture(null).isPremium(false).password(encoder.encode("123"))
-				.urlInstagram(null).urlLinkedin(null)
-				.urlWebSite(null).build();
+				.profilePicture(null).isPremium(false).password(encoder.encode("123")).urlInstagram(null)
+				.urlLinkedin(null).urlWebSite(null).build();
 
 		userRepository.saveAll(Arrays.asList(user, user1, user2, user3));
 
@@ -95,7 +94,7 @@ public class DBService {
 						+ "venda de 90% das ações da SAF, a qual foi adquirida por Ronaldo Fenômeno. Em 2022, a equipe celeste fez uma campanha boa na Copa do Brasil "
 						+ "e até a data desta publicação, vem liderando a série B "
 						+ "com 7 pontos de diferença para o Vasco da Gama. A torcida celeste finalmente está de bem com o time e sorridente!"
-						+ "#ObrigadoRonaldo")
+						+ " #ObrigadoRonaldo")
 				.build();
 
 		var post2 = Post.builder().id(null).createdAt(dateJaneiro).updatedAt(null).thumbnail(null)
@@ -113,8 +112,8 @@ public class DBService {
 				.build();
 
 		var post4 = Post.builder().id(null).createdAt(dateJaneiro).updatedAt(null).thumbnail(null)
-				.description("Lorem ipsum dolor vel. orem ipsum dolor Lorem ipsum dolor vel Lorem ipsum dolor vel").category(category3)
-				.title("Eget Lorem ip vel").isPublished(true).publishedAt(now).user(user)
+				.description("Lorem ipsum dolor vel. orem ipsum dolor Lorem ipsum dolor vel Lorem ipsum dolor vel")
+				.category(category3).title("Eget Lorem ip vel").isPublished(true).publishedAt(now).user(user)
 				.content(
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum scelerisque, nisi et faucibus mollis, magna magna bibendum libero morbi.")
 				.build();
@@ -156,7 +155,7 @@ public class DBService {
 		var follower2 = Follower.builder().id(null).follow(user2).followed(user1).createdAt(dateCreatedSena).build();
 
 		var follower3 = Follower.builder().id(null).follow(user2).followed(user).createdAt(now).build();
-		
+
 		var follower4 = Follower.builder().id(null).follow(user3).followed(user).createdAt(now).build();
 
 //		followerRepository.saveAll(Arrays.asList(follower, follower1, follower2, follower3));
