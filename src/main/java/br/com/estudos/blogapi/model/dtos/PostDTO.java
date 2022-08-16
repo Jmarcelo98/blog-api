@@ -30,13 +30,15 @@ public class PostDTO implements Serializable {
 	private Boolean isPublished;
 
 	private LocalDate publishedAt;
-	
+
 	private LocalDate createdAt;
 
 	private LocalDate updatedAt;
 
 	private CategoryDTO category;
-	
+
+	private UserDTO user;
+
 	private List<CommentDTO> comments;
 
 }
