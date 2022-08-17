@@ -39,11 +39,18 @@ public class PostController {
 		return ResponseEntity.ok().build();
 	}
 
+	@PatchMapping(path = "/publish")
+	public ResponseEntity<Void> publish(@RequestBody Integer id) {
+		postService.publish(id);
+		return ResponseEntity.ok().build();
+	}
+	
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
 		postService.delete(id, jwtUtils.getPrincipal());
 		return ResponseEntity.ok().build();
 	}
+	
 
 	@GetMapping(path = "/most-recent")
 	public ResponseEntity<List<PostDTO>> getMostRecentPost() {
@@ -51,8 +58,20 @@ public class PostController {
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<PostDTO> findByIdPostDTO(@PathVariable("id") Integer id) {
-		return ResponseEntity.ok(postService.findByIdPostDTO(id));
+	public ResponseEntity<PostDTO> findByIdPostPublished(@PathVariable("id") Integer id) {
+		return ResponseEntity.ok(postService.findByIdPostPublished(id));
+	}
+	
+	@GetMapping(path = "/lock")
+	public ResponseEntity<Boolean> existsPostLock() {
+		return ResponseEntity.ok(postService.existsPostLock());
+	}
+
+	@GetMapping(path = "/not-published")
+	public ResponseEntity<List<PostDTO>> findAllByUserNotPublished(
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "itensPerPage", defaultValue = "10") Integer itensPerPage) {
+		return ResponseEntity.ok(postService.findAllByUserNotPublished(page, itensPerPage));
 	}
 
 	@GetMapping(path = "/all/{nickname}")

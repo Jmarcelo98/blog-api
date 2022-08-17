@@ -132,7 +132,21 @@ public class DBService {
 				.publishedAt(LocalDate.of(2022, 7, 20)).user(user)
 				.content("O FIFA 22 é simplesmente um patch do FIFA 21, o modo carreira é todo bugado!").build();
 
-		postRepository.saveAll(Arrays.asList(post, post2, post3, post4, post5, post6));
+		var post7 = Post.builder().id(null).createdAt(LocalDate.of(2021, 7, 20)).updatedAt(null).thumbnail(null)
+				.description("VEM AI O MELHOR COD").category(category2).title("O NOVO MWII").isPublished(false)
+				.publishedAt(null).user(user)
+				.content(
+						"O novo COD tá chegando aí, será que ele vem para resgastar os jogadores antigos do COD? Muito esperança e hyppe existe")
+				.build();
+
+		var post8 = Post.builder().id(null).createdAt(LocalDate.of(2021, 7, 20)).updatedAt(null).thumbnail(null)
+				.description("TESTE POST NAO PUBLICADO").category(category2).title("POST N PUBLICADO")
+				.isPublished(false).publishedAt(null).user(user)
+				.content(
+						"POST NÃO PUBLICADO, PARA TESTE!!! POST NÃO PUBLICADO, PARA TESTE!!! POST NÃO PUBLICADO, PARA TESTE!!! POST NÃO PUBLICADO, PARA TESTE!!! POST NÃO PUBLICADO, PARA TESTE!!!")
+				.build();
+
+		postRepository.saveAll(Arrays.asList(post, post2, post3, post4, post5, post6, post7, post8));
 
 		var comment = Comment.builder().id(null).createdAt(dateFevereiro).post(post).user(user1)
 				.comment("Muito bom o POST! A SAF é muito importante para o clubes brasileiros").build();

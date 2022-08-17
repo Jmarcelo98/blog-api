@@ -72,6 +72,15 @@ public class PostService {
 	}
 
 	@Transactional
+	public void publish(Integer id) {
+		var post = postRepository.findById(id);
+
+		post.get().setPublishedAt(LocalDate.now());
+		post.get().setIsPublished(true);
+		postRepository.save(post.get());
+	}
+
+	@Transactional
 	public void delete(Integer idPost, String logged) {
 
 		var user = findUserByNickname(logged);
@@ -100,7 +109,7 @@ public class PostService {
 		return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post não encontrado"));
 	}
 
-	public PostDTO findByIdPostDTO(Integer id) {
+	public PostDTO findByIdPostPublished(Integer id) {
 		var postById = postRepository.findByIdAndIsPublishedTrue(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Post não encontrado"));
 		return PostMapper.INSTANCE.entityToDTO(postById);
@@ -111,6 +120,11 @@ public class PostService {
 		return postRepository.countByUserAndIsPublishedTrue(user);
 	}
 
+	public Boolean existsPostLock() {
+		var user = userService.getUserLogged();
+		return postRepository.existsByUserAndIsPublishedFalse(user);
+	}
+
 	public List<PostDTO> findAllByUser(String nickname, Integer page, Integer itensPerPage) {
 
 		var user = userService.findByNickname(nickname);
@@ -118,6 +132,18 @@ public class PostService {
 		PageRequest pageRequest = PageRequest.of(page, itensPerPage);
 
 		var listPost = postRepository.findAllByUserAndIsPublishedTrueOrderByPublishedAtDesc(user, pageRequest);
+
+		return PostMapper.INSTANCE.listaEntityToListaDTO(listPost);
+
+	}
+
+	public List<PostDTO> findAllByUserNotPublished(Integer page, Integer itensPerPage) {
+
+		var user = userService.getUserLogged();
+
+		PageRequest pageRequest = PageRequest.of(page, itensPerPage);
+
+		var listPost = postRepository.findAllByUserAndIsPublishedFalseOrderByCreatedAtDesc(user, pageRequest);
 
 		return PostMapper.INSTANCE.listaEntityToListaDTO(listPost);
 
