@@ -101,7 +101,7 @@ public class PostService {
 	}
 
 	public PostDTO findByIdPostDTO(Integer id) {
-		var postById = postRepository.findById(id)
+		var postById = postRepository.findByIdAndIsPublishedTrue(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Post não encontrado"));
 		return PostMapper.INSTANCE.entityToDTO(postById);
 	}

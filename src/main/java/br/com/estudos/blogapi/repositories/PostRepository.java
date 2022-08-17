@@ -1,6 +1,7 @@
 package br.com.estudos.blogapi.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +19,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 	Boolean itYourPost(Integer idPost, Integer idLogado);
 
 	Integer countByUserAndIsPublishedTrue(User user);
+	
+	Optional<Post> findByIdAndIsPublishedTrue(Integer id);
 	
 	List<Post> findAllByIsPublishedTrueOrderByPublishedAtDesc(Pageable pageRequest);
 
