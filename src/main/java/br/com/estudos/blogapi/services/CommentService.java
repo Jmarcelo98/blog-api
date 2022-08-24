@@ -27,7 +27,7 @@ public class CommentService {
 	private final PostService postService;
 
 	@Transactional
-	public void createComment(CommentInputDTO commentInputDTO) {
+	public void create(CommentInputDTO commentInputDTO) {
 
 		var user = userService.findByNickname(jwtUtils.getPrincipal());
 		var post = postService.findById(commentInputDTO.getIdPost());

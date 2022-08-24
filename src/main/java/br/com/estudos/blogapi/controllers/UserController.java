@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.estudos.blogapi.configs.security.JWTUtils;
 import br.com.estudos.blogapi.model.dtos.UserDTO;
 import br.com.estudos.blogapi.model.dtos.input.UserRegistrationInputDTO;
 import br.com.estudos.blogapi.model.dtos.input.UserUpdateInputDTO;
@@ -24,8 +23,6 @@ public class UserController {
 
 	private final UserService userService;
 
-	private final JWTUtils jwtUtils;
-
 	@PostMapping
 	public ResponseEntity<Void> create(@RequestBody UserRegistrationInputDTO userRegistrationInputDTO) {
 		userService.create(userRegistrationInputDTO);
@@ -34,7 +31,7 @@ public class UserController {
 
 	@PatchMapping
 	public ResponseEntity<Void> update(@RequestBody UserUpdateInputDTO userUpdateInputDTO) {
-		userService.update(userUpdateInputDTO, jwtUtils.getPrincipal());
+		userService.update(userUpdateInputDTO);
 		return ResponseEntity.ok().build();
 	}
 
@@ -45,7 +42,7 @@ public class UserController {
 
 	@DeleteMapping
 	public ResponseEntity<Void> delete() {
-		userService.delete(jwtUtils.getPrincipal());
+		userService.delete();
 		return ResponseEntity.ok().build();
 	}
 

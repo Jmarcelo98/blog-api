@@ -18,8 +18,8 @@ public class CommentController {
 	private final CommentService commentService;
 
 	@PostMapping
-	public ResponseEntity<Void> createComment(@RequestBody CommentInputDTO commentInputDTO) {
-		commentService.createComment(commentInputDTO);
+	public ResponseEntity<Void> create(@RequestBody CommentInputDTO commentInputDTO) {
+		commentService.create(commentInputDTO);
 		return ResponseEntity.ok().build();
 	}
 

@@ -49,9 +49,9 @@ public class UserService {
 	}
 
 	@Transactional
-	public void update(UserUpdateInputDTO userUpdateInputDTO, String nickname) {
+	public void update(UserUpdateInputDTO userUpdateInputDTO) {
 
-		var userLogged = findByNickname(nickname);
+		var userLogged = getUserLogged();
 
 		BeanUtils.copyProperties(userUpdateInputDTO, userLogged);
 
@@ -64,8 +64,8 @@ public class UserService {
 	}
 
 	@Transactional
-	public void delete(String nickname) {
-		userRepository.deleteByNickname(nickname);
+	public void delete() {
+		userRepository.delete(getUserLogged());
 		log.info("Usuário deletado com sucesso");
 	}
 

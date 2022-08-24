@@ -32,15 +32,15 @@ public class FollowerService {
 	private final UserService userService;
 
 	@Transactional
-	public void create(String nickname, String logged) {
+	public void create(String nickname) {
 
-		if (isSameUser(nickname, logged)) {
+		var userLogged = userService.getUserLogged();
+
+		if (isSameUser(nickname, userLogged.getNickname())) {
 			throw new BusinessException("Você não pode desseguir a você mesmo");
 		}
 
 		var userToFollow = findUserByNickname(nickname);
-
-		var userLogged = findUserByNickname(logged);
 
 		if (isFollow(userLogged, userToFollow)) {
 			log.error("O " + userLogged.getNickname() + " já segue o " + userToFollow.getNickname());
@@ -57,15 +57,15 @@ public class FollowerService {
 	}
 
 	@Transactional
-	public void delete(String nickname, String logged) {
+	public void delete(String nickname) {
 
-		if (isSameUser(nickname, logged)) {
+		var userLogged = userService.getUserLogged();
+
+		if (isSameUser(nickname, userLogged.getNickname())) {
 			throw new BusinessException("Você não pode desseguir a você mesmo");
 		}
 
 		var userToUnfollow = findUserByNickname(nickname);
-
-		var userLogged = findUserByNickname(logged);
 
 		if (!isFollow(userLogged, userToUnfollow)) {
 			log.error("O " + userLogged.getNickname() + " não segue o " + userToUnfollow.getNickname());
@@ -113,6 +113,7 @@ public class FollowerService {
 	}
 
 	public List<UserOutputDTO> findAllFollowing(String nickname) {
+
 		var user = findUserByNickname(nickname);
 		var following = followerRepository.findAllByFollowOrderByCreatedAtDesc(user);
 
@@ -123,13 +124,13 @@ public class FollowerService {
 				.collect(Collectors.toList());
 	}
 
-	public Boolean isFollow(String nickname, String nicknameLogged) {
+	public Boolean isFollow(String nickname) {
 
-		if (isSameUser(nickname, nicknameLogged)) {
+		var userLogged = userService.getUserLogged();
+
+		if (isSameUser(nickname, userLogged.getNickname())) {
 			throw new BusinessException("Você não segue a você mesmo");
 		}
-
-		var userLogged = findUserByNickname(nicknameLogged);
 
 		var userToFollow = findUserByNickname(nickname);
 

@@ -15,7 +15,6 @@ import br.com.estudos.blogapi.mappers.PostMapper;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
 import br.com.estudos.blogapi.model.dtos.input.PostInputDTO;
 import br.com.estudos.blogapi.model.entities.Post;
-import br.com.estudos.blogapi.model.entities.User;
 import br.com.estudos.blogapi.repositories.PostRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +31,9 @@ public class PostService {
 	private final CategoryService categoryService;
 
 	@Transactional
-	public Integer create(PostInputDTO postInputDTO, String logged) {
+	public Integer create(PostInputDTO postInputDTO) {
 
-		var userLogged = userService.findByNickname(logged);
+		var userLogged = userService.getUserLogged();
 
 		var category = categoryService.findById(postInputDTO.getCategory().getId());
 
@@ -53,9 +52,9 @@ public class PostService {
 	}
 
 	@Transactional
-	public void update(PostDTO postDTO, String logged) {
+	public void update(PostDTO postDTO) {
 
-		var user = findUserByNickname(logged);
+		var user = userService.getUserLogged();
 
 		if (!itYourPost(postDTO.getId(), user.getId())) {
 			throw new ForbiddenException("Impossível editar um POST que não é seu");
@@ -73,6 +72,13 @@ public class PostService {
 
 	@Transactional
 	public void publish(Integer id) {
+
+		var user = userService.getUserLogged();
+
+		if (!itYourPost(id, user.getId())) {
+			throw new ForbiddenException("Impossível publicar um POST que não é seu");
+		}
+
 		var post = postRepository.findById(id);
 
 		post.get().setPublishedAt(LocalDate.now());
@@ -81,9 +87,9 @@ public class PostService {
 	}
 
 	@Transactional
-	public void delete(Integer idPost, String logged) {
+	public void delete(Integer idPost) {
 
-		var user = findUserByNickname(logged);
+		var user = userService.getUserLogged();
 
 		if (!itYourPost(idPost, user.getId())) {
 			throw new ForbiddenException("Impossível apagar um POST que não é seu");
@@ -98,8 +104,6 @@ public class PostService {
 		PageRequest pageRequest = PageRequest.of(0, 4);
 
 		var list = postRepository.findAllByIsPublishedTrueOrderByPublishedAtDesc(pageRequest);
-
-		System.err.println(list.size());
 
 		return PostMapper.INSTANCE.listaEntityToListaDTO(list);
 
@@ -116,7 +120,7 @@ public class PostService {
 	}
 
 	public Integer countPostsCreated(String nickname) {
-		var user = findUserByNickname(nickname);
+		var user = userService.findByNickname(nickname);
 		return postRepository.countByUserAndIsPublishedTrue(user);
 	}
 
@@ -127,7 +131,7 @@ public class PostService {
 
 	public List<PostDTO> findAllByUser(String nickname, Integer page, Integer itensPerPage) {
 
-		var user = userService.findByNickname(nickname);
+		var user = userService.getUserLogged();
 
 		PageRequest pageRequest = PageRequest.of(page, itensPerPage);
 
@@ -153,10 +157,6 @@ public class PostService {
 
 		return postRepository.itYourPost(idPost, idUsuario);
 
-	}
-
-	private User findUserByNickname(String nickname) {
-		return userService.findByNickname(nickname);
 	}
 
 	private LocalDate publishNow(Boolean isPublished) {

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.estudos.blogapi.configs.security.JWTUtils;
 import br.com.estudos.blogapi.model.dtos.PostDTO;
 import br.com.estudos.blogapi.model.dtos.input.PostInputDTO;
 import br.com.estudos.blogapi.services.PostService;
@@ -26,16 +25,14 @@ public class PostController {
 
 	private final PostService postService;
 
-	private final JWTUtils jwtUtils;
-
 	@PostMapping
 	public ResponseEntity<Integer> create(@RequestBody PostInputDTO postInputDTO) {
-		return ResponseEntity.ok(postService.create(postInputDTO, jwtUtils.getPrincipal()));
+		return ResponseEntity.ok(postService.create(postInputDTO));
 	}
 
 	@PatchMapping
 	public ResponseEntity<Void> update(@RequestBody PostDTO postDTO) {
-		postService.update(postDTO, jwtUtils.getPrincipal());
+		postService.update(postDTO);
 		return ResponseEntity.ok().build();
 	}
 
@@ -44,13 +41,12 @@ public class PostController {
 		postService.publish(id);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-		postService.delete(id, jwtUtils.getPrincipal());
+		postService.delete(id);
 		return ResponseEntity.ok().build();
 	}
-	
 
 	@GetMapping(path = "/most-recent")
 	public ResponseEntity<List<PostDTO>> getMostRecentPost() {
@@ -61,7 +57,7 @@ public class PostController {
 	public ResponseEntity<PostDTO> findByIdPostPublished(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(postService.findByIdPostPublished(id));
 	}
-	
+
 	@GetMapping(path = "/lock")
 	public ResponseEntity<Boolean> existsPostLock() {
 		return ResponseEntity.ok(postService.existsPostLock());

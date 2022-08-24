@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.estudos.blogapi.configs.security.JWTUtils;
 import br.com.estudos.blogapi.model.dtos.output.UserOutputDTO;
 import br.com.estudos.blogapi.services.FollowerService;
 import lombok.AllArgsConstructor;
@@ -24,17 +23,15 @@ public class FollowerController {
 
 	private final FollowerService followerService;
 
-	private final JWTUtils jwtUtils;
-
 	@PostMapping
 	public ResponseEntity<Void> create(@RequestBody String nickname) {
-		followerService.create(nickname, jwtUtils.getPrincipal());
+		followerService.create(nickname);
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping(path = "/{nickname}")
 	public ResponseEntity<Void> delete(@PathVariable("nickname") String nickname) {
-		followerService.delete(nickname, jwtUtils.getPrincipal());
+		followerService.delete(nickname);
 		return ResponseEntity.ok().build();
 	}
 
@@ -55,7 +52,7 @@ public class FollowerController {
 
 	@GetMapping(path = "/isFollow/{nickname}")
 	public ResponseEntity<Boolean> isFollow(@PathVariable("nickname") String nickname) {
-		return ResponseEntity.ok(followerService.isFollow(nickname, jwtUtils.getPrincipal()));
+		return ResponseEntity.ok(followerService.isFollow(nickname));
 	}
 
 	@GetMapping(value = "/count-follower/{nickname}")
